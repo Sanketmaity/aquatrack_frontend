@@ -135,15 +135,18 @@ export default function RegisterApartment() {
                 <option value="GATED_COMMUNITY">Gated Community</option>
               </select>
 
+              
               <input
-                type="number"
-                name="numberOfApartments"
-                placeholder="Number of Apartments"
-                value={formData.numberOfApartments}
-                onChange={handleChange}
-                className="w-full p-4 rounded-xl border dark:bg-slate-800 dark:border-slate-700"
-                required
-              />
+    type="number"
+    name="numberOfApartments"
+    min="1"
+    step="1"
+    placeholder="Number of Apartments"
+    value={formData.numberOfApartments}
+    onChange={handleChange}
+    className="w-full p-4 rounded-xl border dark:bg-slate-800 dark:border-slate-700"
+    required
+/>
 
             </div>
 

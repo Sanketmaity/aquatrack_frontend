@@ -209,7 +209,7 @@ export default function Hero() {
         className="mt-10 text-center"
       >
         <p className="text-lg md:text-xl font-medium text-slate-700 dark:text-slate-300 mb-6">
-          🏢 Book <span className="font-bold text-blue-600">AquaTrack</span> for your property and become the
+          Book <span className="font-bold text-blue-600">AquaTrack</span> for your property and become the
           <span className="font-semibold text-blue-600"> Property Admin</span>.
         </p>
 
@@ -220,7 +220,7 @@ export default function Hero() {
             </button>
           </Link>
 
-          <button className="px-8 py-4 rounded-xl border border-gray-300 dark:border-gray-700 hover:bg-white/60 dark:hover:bg-gray-800 transition-all duration-300 hover:scale-105">
+          <button className="px-8 py-4 rounded-xl border border-gray-300 dark:border-gray-700 dark:text-white hover:bg-white/60 dark:hover:bg-gray-800 transition-all duration-300 hover:scale-105">
             Learn More
           </button>
         </div>
