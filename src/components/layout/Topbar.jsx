@@ -41,7 +41,7 @@ export default function Topbar() {
 
                 <p className="text-sm text-slate-500">
 
-                    Welcome back 👋
+                    Welcome back
 
                 </p>
 

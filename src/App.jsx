@@ -15,15 +15,47 @@ import ResetPassword from "./pages/auth/ResetPassword";
 // Dashboard Pages
 // ==========================================
 
-import AdminDashboard from "./pages/dashboard/AdminDashboard";
-import PropertyDashboard from "./pages/dashboard/AdminDashboard";
+import SuperAdminDashboard from "./pages/dashboard/SuperAdminDashboard";
+import PropertyDashboard from "./pages/dashboard/PropertyAdminDashboard";
+import ManagerDashboard from "./pages/dashboard/ManagerDashboard";
+import ResidentDashboard from "./pages/dashboard/ResidentDashboard";
+
+// ==========================================
+//  Property Admin Pages
+// ==========================================
+
+import ApartmentList from "./pages/property/ApartmentList";
+import BuildingList from "./pages/property/BuildingList";
+import ManagerList from "./pages/property/ManagerList";
+import FloorList from "./pages/property/FloorList";
+
+
+
+// ==========================================
+//  Manager Pages
+// ==========================================
+
+import HouseholdList from "./pages/manager/HouseholdList";
+import ResidentList from "./pages/manager/ResidentList";
+import BillingCycleList from "./pages/manager/BillingCycleList";
+import WaterUsageList from "./pages/manager/WaterUsageList";
+
+
 
 // ==========================================
 // Admin Pages
 // ==========================================
 
 import PropertyRegistrations from "./pages/admin/PropertyRegistrations";
+import PropertyAdminActivation from "./pages/auth/PropertyAdminActivation";
 import PropertyAdmins from "./pages/admin/PropertyAdmins";
+import ManagerActivation from "./pages/auth/ManagerActivation";
+
+
+// ==========================================
+// Resident Pages
+// ==========================================
+import ResidentActivation from "./pages/auth/ResidentActivation";
 
 // ==========================================
 // Route Protection
@@ -76,7 +108,7 @@ export default function App() {
                     <ProtectedRoute
                         allowedRoles={["SUPER_ADMIN"]}
                     >
-                        <AdminDashboard />
+                        <SuperAdminDashboard />
                     </ProtectedRoute>
                 }
             />
@@ -108,6 +140,11 @@ export default function App() {
             ========================================== */}
 
             <Route
+                path="/property-admin/activate"
+                element={<PropertyAdminActivation />}
+            />
+
+            <Route
                 path="/property/dashboard"
                 element={
                     <ProtectedRoute
@@ -118,11 +155,53 @@ export default function App() {
                 }
             />
 
+            <Route
+                path="/property/apartments"
+                element={
+                    <ProtectedRoute
+                        allowedRoles={["PROPERTY_ADMIN"]}
+                    >
+                        <ApartmentList />
+                    </ProtectedRoute>
+                }
+            />
+
+
+            <Route
+                path="/property/buildings"
+                element={
+                    <ProtectedRoute allowedRoles={["PROPERTY_ADMIN"]}>
+                        <BuildingList />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/property/managers"
+                element={
+                    <ProtectedRoute allowedRoles={["PROPERTY_ADMIN"]}>
+                        <ManagerList />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/property/floors"
+                element={
+                    <ProtectedRoute allowedRoles={["PROPERTY_ADMIN"]}>
+                        <FloorList />
+                    </ProtectedRoute>
+                }
+            />
+
             {/* ==========================================
                 MANAGER Routes
             ========================================== */}
-
-            {/*
+            <Route
+                path="/manager/activate"
+                element={<ManagerActivation />}
+            />
+            
             <Route
                 path="/manager/dashboard"
                 element={
@@ -133,13 +212,57 @@ export default function App() {
                     </ProtectedRoute>
                 }
             />
-            */}
+
+            <Route
+                path="/manager/households"
+                element={
+                    <ProtectedRoute
+                        allowedRoles={["MANAGER"]}
+                    >
+                        <HouseholdList />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/manager/residents"
+                element={
+                    <ProtectedRoute
+                        allowedRoles={["MANAGER"]}
+                    >
+                        <ResidentList />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/manager/billing-cycles"
+                element={
+                    <ProtectedRoute allowedRoles={["MANAGER"]}>
+                        <BillingCycleList />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/manager/water-usage"
+                element={
+                    <ProtectedRoute allowedRoles={["MANAGER"]}>
+                        <WaterUsageList />
+                    </ProtectedRoute>
+                }
+             />
 
             {/* ==========================================
                 RESIDENT Routes
             ========================================== */}
 
-            {/*
+            <Route
+                path="/resident/activate"
+                element={<ResidentActivation />}
+            />
+
+            
             <Route
                 path="/resident/dashboard"
                 element={
@@ -150,7 +273,7 @@ export default function App() {
                     </ProtectedRoute>
                 }
             />
-            */}
+           
 
         </Routes>
 

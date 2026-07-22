@@ -22,7 +22,7 @@ import {
     getRecentRegistrations,
 } from "../../services/dashboardService";
 
-export default function AdminDashboard() {
+export default function SuperAdminDashboard() {
 
     // ==========================================
     // State

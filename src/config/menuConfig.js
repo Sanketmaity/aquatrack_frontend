@@ -2,11 +2,13 @@ import {
     LayoutDashboard,
     Building2,
     Building,
+    Layers3,
     Users,
     UserCog,
+    Home,
+    CalendarDays,
     Droplets,
     CreditCard,
-    Settings,
     LogOut,
 } from "lucide-react";
 
@@ -34,12 +36,6 @@ export const menuConfig = {
             title: "Property Admins",
             icon: Users,
             path: "/admin/property-admins",
-        },
-
-        {
-            title: "Settings",
-            icon: Settings,
-            path: "/admin/settings",
         },
 
         {
@@ -75,15 +71,15 @@ export const menuConfig = {
         },
 
         {
-            title: "Managers",
-            icon: UserCog,
-            path: "/property/managers",
+            title: "Floors",
+            icon: Layers3,
+            path: "/property/floors",
         },
 
         {
-            title: "Settings",
-            icon: Settings,
-            path: "/property/settings",
+            title: "Managers",
+            icon: UserCog,
+            path: "/property/managers",
         },
 
         {
@@ -107,21 +103,27 @@ export const menuConfig = {
         },
 
         {
+            title: "Households",
+            icon: Home,
+            path: "/manager/households",
+        },
+
+        {
             title: "Residents",
             icon: Users,
             path: "/manager/residents",
         },
 
         {
-            title: "Water Usage",
-            icon: Droplets,
-            path: "/manager/water-usage",
+            title: "Billing Cycles",
+            icon: CalendarDays,
+            path: "/manager/billing-cycles",
         },
 
         {
-            title: "Settings",
-            icon: Settings,
-            path: "/manager/settings",
+            title: "Water Usage",
+            icon: Droplets,
+            path: "/manager/water-usage",
         },
 
         {
@@ -154,12 +156,6 @@ export const menuConfig = {
             title: "Bills",
             icon: CreditCard,
             path: "/resident/bills",
-        },
-
-        {
-            title: "Settings",
-            icon: Settings,
-            path: "/resident/settings",
         },
 
         {

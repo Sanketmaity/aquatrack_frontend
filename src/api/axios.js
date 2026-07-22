@@ -12,7 +12,23 @@ const api = axios.create({
 });
 
 // ==========================================
-// Attach JWT Token Automatically
+// Public Endpoints
+// ==========================================
+
+const publicEndpoints = [
+
+    "/auth/login",
+
+    "/auth/forgot-password",
+
+    "/auth/reset-password",
+
+    "/property-registration",
+
+];
+
+// ==========================================
+// Attach JWT Token
 // ==========================================
 
 api.interceptors.request.use(
@@ -21,7 +37,13 @@ api.interceptors.request.use(
 
         const token = localStorage.getItem("token");
 
-        if (token) {
+        const isPublicEndpoint = publicEndpoints.some(
+
+            (endpoint) => config.url?.startsWith(endpoint)
+
+        );
+
+        if (token && !isPublicEndpoint) {
 
             config.headers.Authorization = `Bearer ${token}`;
 
@@ -31,7 +53,25 @@ api.interceptors.request.use(
 
     },
 
+    (error) => Promise.reject(error)
+
+);
+
+api.interceptors.response.use(
+
+    (response) => response,
+
     (error) => {
+
+        if (error.response?.status === 401) {
+
+            localStorage.removeItem("token");
+            localStorage.removeItem("role");
+            localStorage.removeItem("email");
+
+            window.location.href = "/login";
+
+        }
 
         return Promise.reject(error);
 
