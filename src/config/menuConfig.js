@@ -125,6 +125,13 @@ export const menuConfig = {
             icon: Droplets,
             path: "/manager/water-usage",
         },
+        
+        {
+            title: "Bulk Water Purchases",
+            icon: CreditCard,
+            path: "/manager/bulk-water-purchases",
+        },
+
 
         {
             title: "Logout",

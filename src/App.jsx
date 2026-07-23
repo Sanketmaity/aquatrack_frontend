@@ -39,7 +39,7 @@ import HouseholdList from "./pages/manager/HouseholdList";
 import ResidentList from "./pages/manager/ResidentList";
 import BillingCycleList from "./pages/manager/BillingCycleList";
 import WaterUsageList from "./pages/manager/WaterUsageList";
-
+import BulkWaterPurchaseList from "./pages/manager/BulkWaterPurchaseList";
 
 
 // ==========================================
@@ -62,6 +62,7 @@ import ResidentActivation from "./pages/auth/ResidentActivation";
 // ==========================================
 
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { i } from "framer-motion/client";
 
 export default function App() {
 
@@ -252,6 +253,15 @@ export default function App() {
                     </ProtectedRoute>
                 }
              />
+
+            <Route
+                path="/manager/bulk-water-purchases"
+                element={
+                    <ProtectedRoute allowedRoles={["MANAGER"]}>
+                        <BulkWaterPurchaseList />
+                    </ProtectedRoute>
+                }
+            />
 
             {/* ==========================================
                 RESIDENT Routes

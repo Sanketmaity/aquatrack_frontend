@@ -28,7 +28,7 @@ const householdService = {
             `${BASE_URL}/buildings`
         );
 
-        return response.data;
+        return response.data?.data ?? response.data;
 
     },
 
