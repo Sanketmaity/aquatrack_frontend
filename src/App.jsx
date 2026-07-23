@@ -40,7 +40,7 @@ import ResidentList from "./pages/manager/ResidentList";
 import BillingCycleList from "./pages/manager/BillingCycleList";
 import WaterUsageList from "./pages/manager/WaterUsageList";
 import BulkWaterPurchaseList from "./pages/manager/BulkWaterPurchaseList";
-
+import ConsumptionDistributionList from "./pages/manager/ConsumptionDistributionList";
 
 // ==========================================
 // Admin Pages
@@ -259,6 +259,15 @@ export default function App() {
                 element={
                     <ProtectedRoute allowedRoles={["MANAGER"]}>
                         <BulkWaterPurchaseList />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/manager/consumption-distribution"
+                element={
+                    <ProtectedRoute allowedRoles={["MANAGER"]}>
+                        <ConsumptionDistributionList />
                     </ProtectedRoute>
                 }
             />

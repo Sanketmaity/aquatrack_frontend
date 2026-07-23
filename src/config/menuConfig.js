@@ -132,6 +132,12 @@ export const menuConfig = {
             path: "/manager/bulk-water-purchases",
         },
 
+        {
+            title: "Consumption Distribution",
+            icon: CreditCard,
+            path: "/manager/consumption-distribution",
+        },
+
 
         {
             title: "Logout",
