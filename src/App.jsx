@@ -28,7 +28,7 @@ import ApartmentList from "./pages/property/ApartmentList";
 import BuildingList from "./pages/property/BuildingList";
 import ManagerList from "./pages/property/ManagerList";
 import FloorList from "./pages/property/FloorList";
-
+import PaymentList from "./pages/property/PaymentList";
 
 
 // ==========================================
@@ -41,6 +41,8 @@ import BillingCycleList from "./pages/manager/BillingCycleList";
 import WaterUsageList from "./pages/manager/WaterUsageList";
 import BulkWaterPurchaseList from "./pages/manager/BulkWaterPurchaseList";
 import ConsumptionDistributionList from "./pages/manager/ConsumptionDistributionList";
+import WaterBillList from "./pages/manager/WaterBillList";
+import ManagerPaymentList from "./pages/manager/ManagerPaymentList";
 
 // ==========================================
 // Admin Pages
@@ -56,6 +58,10 @@ import ManagerActivation from "./pages/auth/ManagerActivation";
 // Resident Pages
 // ==========================================
 import ResidentActivation from "./pages/auth/ResidentActivation";
+import MyHouseholdList from "./pages/resident/MyHouseholdList";
+import MyWaterUsageList from "./pages/resident/MyWaterUsageList";
+import MyWaterBillsList from "./pages/resident/MyWaterBillsList";
+import MyPaymentsList from "./pages/resident/MyPaymentsList";
 
 // ==========================================
 // Route Protection
@@ -63,6 +69,7 @@ import ResidentActivation from "./pages/auth/ResidentActivation";
 
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { i } from "framer-motion/client";
+
 
 export default function App() {
 
@@ -195,6 +202,16 @@ export default function App() {
                 }
             />
 
+            <Route
+                path="/property/payments"
+                element={
+                    <ProtectedRoute allowedRoles={["PROPERTY_ADMIN"]}>
+                        <PaymentList />
+                    </ProtectedRoute>
+                }
+            />
+
+
             {/* ==========================================
                 MANAGER Routes
             ========================================== */}
@@ -272,6 +289,25 @@ export default function App() {
                 }
             />
 
+            <Route
+                path="/manager/water-bills"
+                element={
+                    <ProtectedRoute allowedRoles={["MANAGER"]}>
+                        <WaterBillList />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/manager/payments"
+                element={
+                    <ProtectedRoute allowedRoles={["MANAGER"]}>
+                        <ManagerPaymentList />
+                    </ProtectedRoute>
+                }
+            />
+
+
             {/* ==========================================
                 RESIDENT Routes
             ========================================== */}
@@ -289,6 +325,50 @@ export default function App() {
                         allowedRoles={["RESIDENT"]}
                     >
                         <ResidentDashboard />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/resident/my-household"
+                element={
+                    <ProtectedRoute
+                        allowedRoles={["RESIDENT"]}
+                    >
+                        <MyHouseholdList />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/resident/water-usage"
+                element={
+                    <ProtectedRoute
+                        allowedRoles={["RESIDENT"]}
+                    >
+                        <MyWaterUsageList />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/resident/water-bills"
+                element={
+                    <ProtectedRoute
+                        allowedRoles={["RESIDENT"]}
+                    >
+                        <MyWaterBillsList />        
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/resident/my-payments"
+                element={
+                    <ProtectedRoute
+                        allowedRoles={["RESIDENT"]}
+                    >
+                        <MyPaymentsList />        
                     </ProtectedRoute>
                 }
             />

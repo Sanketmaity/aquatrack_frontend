@@ -5,20 +5,32 @@ const BASE_URL = "/manager/distribution";
 const distributionService = {
 
     // ==========================================
-    // Get Consumption Distribution
+    // Generate Consumption Distribution
     // ==========================================
 
-    getConsumptionDistribution: async (
+    generateDistribution: async (
 
         buildingId,
 
-        billingCycleId
+        billingCycleId,
+
+        commonAreaUsage = 0
 
     ) => {
 
-        const response = await api.get(
+        const response = await api.post(
 
-            `${BASE_URL}/${buildingId}/${billingCycleId}`
+            `${BASE_URL}/generate`,
+
+            {
+
+                buildingId,
+
+                billingCycleId,
+
+                commonAreaUsage
+
+            }
 
         );
 

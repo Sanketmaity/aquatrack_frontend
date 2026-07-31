@@ -4,6 +4,7 @@ import DashboardLayout from "../../components/ui/DashboardLayout";
 
 import DistributionHeader from "../../components/distribution/DistributionHeader";
 import DistributionFilterBar from "../../components/distribution/DistributionFilterBar";
+import DistributionSummary from "../../components/distribution/DistributionSummary";
 import DistributionTable from "../../components/distribution/DistributionTable";
 
 import distributionService from "../../services/distributionService";
@@ -20,11 +21,14 @@ export default function ConsumptionDistributionList() {
 
     const [billingCycleId, setBillingCycleId] = useState("");
 
+    const [commonAreaUsage, setCommonAreaUsage] = useState(0);
+
     const [buildings, setBuildings] = useState([]);
 
     const [billingCycles, setBillingCycles] = useState([]);
 
-    const [distribution, setDistribution] = useState([]);
+    // Complete API response
+    const [distributionSummary, setDistributionSummary] = useState(null);
 
     const [loading, setLoading] = useState(false);
 
@@ -106,13 +110,17 @@ export default function ConsumptionDistributionList() {
             setLoading(true);
 
             const response =
-                await distributionService
-                    .getConsumptionDistribution(
-                        buildingId,
-                        billingCycleId
-                    );
+                await distributionService.generateDistribution(
 
-            setDistribution(response);
+                    buildingId,
+
+                    billingCycleId,
+
+                    Number(commonAreaUsage)
+
+                );
+
+            setDistributionSummary(response);
 
         } catch (error) {
 
@@ -144,6 +152,9 @@ export default function ConsumptionDistributionList() {
                     billingCycleId={billingCycleId}
                     setBillingCycleId={setBillingCycleId}
 
+                    commonAreaUsage={commonAreaUsage}
+                    setCommonAreaUsage={setCommonAreaUsage}
+
                     buildings={buildings}
                     billingCycles={billingCycles}
 
@@ -151,9 +162,15 @@ export default function ConsumptionDistributionList() {
 
                 />
 
+                <DistributionSummary
+                    summary={distributionSummary}
+                />
+
                 <DistributionTable
 
-                    distribution={distribution}
+                    distribution={
+                        distributionSummary?.households || []
+                    }
 
                     loading={loading}
 

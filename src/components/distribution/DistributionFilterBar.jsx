@@ -8,6 +8,10 @@ export default function DistributionFilterBar({
 
     setBillingCycleId,
 
+    commonAreaUsage,
+
+    setCommonAreaUsage,
+
     buildings,
 
     billingCycles,
@@ -20,9 +24,11 @@ export default function DistributionFilterBar({
 
         <div className="rounded-2xl bg-white p-6 shadow-sm border border-gray-100">
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
 
-                {/* Building */}
+                {/* ==========================================
+                    Building
+                ========================================== */}
 
                 <div>
 
@@ -68,7 +74,9 @@ export default function DistributionFilterBar({
 
                 </div>
 
-                {/* Billing Cycle */}
+                {/* ==========================================
+                    Billing Cycle
+                ========================================== */}
 
                 <div>
 
@@ -114,7 +122,43 @@ export default function DistributionFilterBar({
 
                 </div>
 
-                {/* Generate Button */}
+                {/* ==========================================
+                    Common Area Usage
+                ========================================== */}
+
+                <div>
+
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
+
+                        Common Area Usage (KL)
+
+                    </label>
+
+                    <input
+
+                        type="number"
+
+                        min="0"
+
+                        step="0.01"
+
+                        value={commonAreaUsage}
+
+                        onChange={(e) =>
+                            setCommonAreaUsage(e.target.value)
+                        }
+
+                        placeholder="0.00"
+
+                        className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:border-blue-500 focus:outline-none"
+
+                    />
+
+                </div>
+
+                {/* ==========================================
+                    Generate Button
+                ========================================== */}
 
                 <div className="flex items-end">
 

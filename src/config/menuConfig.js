@@ -1,3 +1,4 @@
+import { title } from "framer-motion/client";
 import {
     LayoutDashboard,
     Building2,
@@ -9,8 +10,11 @@ import {
     CalendarDays,
     Droplets,
     CreditCard,
+    ReceiptIndianRupee,
     LogOut,
 } from "lucide-react";
+import { GiPayMoney } from "react-icons/gi";
+import { PiPaypalLogo } from "react-icons/pi";
 
 export const menuConfig = {
 
@@ -83,69 +87,87 @@ export const menuConfig = {
         },
 
         {
+            title: "Payments",
+            icon: GiPayMoney,
+            path: "/property/payments",
+        },
+
+        {
             title: "Logout",
             icon: LogOut,
             path: "/logout",
         },
 
     ],
+
 
     // ==========================================
     // MANAGER
     // ==========================================
 
-    MANAGER: [
+MANAGER: [
 
-        {
-            title: "Dashboard",
-            icon: LayoutDashboard,
-            path: "/manager/dashboard",
-        },
+    {
+        title: "Dashboard",
+        icon: LayoutDashboard,
+        path: "/manager/dashboard",
+    },
 
-        {
-            title: "Households",
-            icon: Home,
-            path: "/manager/households",
-        },
+    {
+        title: "Households",
+        icon: Home,
+        path: "/manager/households",
+    },
 
-        {
-            title: "Residents",
-            icon: Users,
-            path: "/manager/residents",
-        },
+    {
+        title: "Residents",
+        icon: Users,
+        path: "/manager/residents",
+    },
 
-        {
-            title: "Billing Cycles",
-            icon: CalendarDays,
-            path: "/manager/billing-cycles",
-        },
+    {
+        title: "Billing Cycles",
+        icon: CalendarDays,
+        path: "/manager/billing-cycles",
+    },
 
-        {
-            title: "Water Usage",
-            icon: Droplets,
-            path: "/manager/water-usage",
-        },
-        
-        {
-            title: "Bulk Water Purchases",
-            icon: CreditCard,
-            path: "/manager/bulk-water-purchases",
-        },
+    {
+        title: "Water Usage",
+        icon: Droplets,
+        path: "/manager/water-usage",
+    },
 
-        {
-            title: "Consumption Distribution",
-            icon: CreditCard,
-            path: "/manager/consumption-distribution",
-        },
+    {
+        title: "Bulk Water Purchases",
+        icon: CreditCard,
+        path: "/manager/bulk-water-purchases",
+    },
 
+    {
+        title: "Consumption Distribution",
+        icon: CreditCard,
+        path: "/manager/consumption-distribution",
+    },
 
-        {
-            title: "Logout",
-            icon: LogOut,
-            path: "/logout",
-        },
+    {
+        title: "Water Bills",
+        icon: ReceiptIndianRupee,
+        path: "/manager/water-bills",
+    },
 
-    ],
+    {
+    title: "Payments",
+    icon: PiPaypalLogo,
+    path: "/manager/payments",
+    },
+
+    {
+        title: "Logout",
+        icon: LogOut,
+        path: "/logout",
+    },
+
+],
 
     // ==========================================
     // RESIDENT
@@ -160,17 +182,29 @@ export const menuConfig = {
         },
 
         {
-            title: "Water Usage",
+            title: "My Household",
+            icon: Home,
+            path: "/resident/my-household",
+        },
+
+        {
+            title: "My Water Usage",
             icon: Droplets,
             path: "/resident/water-usage",
         },
 
         {
-            title: "Bills",
-            icon: CreditCard,
-            path: "/resident/bills",
+            title: "My Water Bills",
+            icon: ReceiptIndianRupee,
+            path: "/resident/water-bills",
         },
 
+        {
+            title: "My Payments",
+            icon: GiPayMoney,
+            path: "/resident/my-payments",
+        },
+        
         {
             title: "Logout",
             icon: LogOut,

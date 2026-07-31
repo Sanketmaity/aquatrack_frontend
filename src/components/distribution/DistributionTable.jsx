@@ -44,7 +44,7 @@ export default function DistributionTable({
 
     return (
 
-        <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
+        <div className="overflow-hidden rounded-2xl bg-white shadow-sm border border-gray-100">
 
             <div className="overflow-x-auto">
 
@@ -80,7 +80,13 @@ export default function DistributionTable({
 
                             <th className="px-6 py-4 text-right text-sm font-semibold">
 
-                                Water Charge
+                                Cost / KL
+
+                            </th>
+
+                            <th className="px-6 py-4 text-right text-sm font-semibold">
+
+                                Consumption Cost
 
                             </th>
 
@@ -114,19 +120,25 @@ export default function DistributionTable({
 
                                 <td className="px-6 py-4 text-right">
 
-                                    {item.usageKL}
+                                    {Number(item.usageKL).toFixed(2)}
 
                                 </td>
 
                                 <td className="px-6 py-4 text-right">
 
-                                    {item.usagePercentage}%
+                                    {Number(item.usagePercentage).toFixed(2)}%
+
+                                </td>
+
+                                <td className="px-6 py-4 text-right">
+
+                                    ₹ {Number(item.costPerKL).toFixed(2)}
 
                                 </td>
 
                                 <td className="px-6 py-4 text-right font-semibold text-green-600">
 
-                                    ₹ {Number(item.chargeAmount).toFixed(2)}
+                                    ₹ {Number(item.consumptionCost).toFixed(2)}
 
                                 </td>
 

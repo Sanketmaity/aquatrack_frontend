@@ -1,21 +1,37 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { registerProperty } from "../services/propertyRegistrationService";
+import { Link } from "react-router-dom";
+import {
+  Building,
+  User,
+  Mail,
+  Phone,
+  Building2,
+  MapPin,
+  Sparkles,
+  ArrowRight,
+  Loader2,
+  Droplets,
+  ArrowLeft,
+} from "lucide-react";
 
+import { registerProperty } from "../services/propertyRegistrationService";
+import AnimatedBackground from "../components/AnimatedBackground";
 
 export default function RegisterApartment() {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-  companyName: "",
-  contactPersonName: "",
-  email: "",
-  phone: "",
-  propertyType: "APARTMENT",
-  numberOfApartments: "",
-  address: "",
-  city: "",
-  state: "",
-  pincode: "",
-});
+    companyName: "",
+    contactPersonName: "",
+    email: "",
+    phone: "",
+    propertyType: "APARTMENT",
+    numberOfApartments: "",
+    address: "",
+    city: "",
+    state: "",
+    pincode: "",
+  });
 
   const handleChange = (e) => {
     setFormData({
@@ -28,9 +44,10 @@ export default function RegisterApartment() {
     e.preventDefault();
 
     try {
+      setLoading(true);
       const response = await registerProperty(formData);
 
-      alert(response.message);
+      alert(response.message || "Property Registered Successfully!");
       console.log(response);
 
       setFormData({
@@ -45,166 +62,376 @@ export default function RegisterApartment() {
         state: "",
         pincode: "",
       });
-
     } catch (error) {
       console.error(error);
-
       const message =
-        error.response?.data?.message ||
-        "Registration failed.";
-
+        error.response?.data?.message || "Registration failed. Please try again.";
       alert(message);
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
-    <section className="min-h-screen relative overflow-hidden bg-gradient-to-br from-sky-100 via-white to-cyan-100 dark:from-slate-950 dark:to-black flex items-center justify-center px-4">
+    <div className="relative min-h-screen overflow-hidden selection:bg-cyan-500 selection:text-white flex items-center justify-center py-12 px-4">
+      {/* Liquid Canvas Background */}
+      <AnimatedBackground />
 
-      {/* Background Glow */}
-      <div className="absolute w-[700px] h-[700px] bg-blue-300/20 blur-[180px] rounded-full"></div>
-
+      {/* Main Container Card */}
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative z-10 w-full max-w-2xl"
+        initial={{ opacity: 0, y: 30, scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="
+          relative
+          z-10
+          w-full
+          max-w-3xl
+          rounded-3xl
+          border
+          border-slate-800/90
+          bg-slate-900/85
+          backdrop-blur-2xl
+          shadow-[0_25px_90px_rgba(0,0,0,0.6)]
+          shadow-cyan-950/30
+          p-8
+          sm:p-10
+          overflow-hidden
+          text-white
+        "
       >
+        {/* Top Gradient Accent Highlight */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-cyan-400 to-teal-400" />
 
-        <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl rounded-3xl shadow-2xl p-10">
+        {/* Back Link */}
+        <div className="mb-6">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors group"
+          >
+            <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
+            <span>Back to Home</span>
+          </Link>
+        </div>
 
-          <h1 className="text-4xl font-bold text-center text-blue-600">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 via-cyan-500 to-teal-400 text-white shadow-lg shadow-cyan-500/30 mx-auto mb-4">
+            <Droplets size={28} />
+          </div>
+
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-xs font-semibold mb-2">
+            <Sparkles size={13} />
+            <span>Onboard Your Property</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             Register Your Apartment
           </h1>
 
-          <p className="text-center text-gray-500 dark:text-gray-300 mt-3 mb-8">
-            Start managing your apartment with AquaTrack
+          <p className="mt-2 text-sm text-slate-400 max-w-md mx-auto">
+            Start managing water consumption, billing cycles, and resident telemetry with AquaTrack.
           </p>
-
-          <form onSubmit={handleSubmit} className="space-y-5">
-
-            <input
-              name="companyName"
-              placeholder="Company Name"
-              value={formData.companyName}
-              onChange={handleChange}
-              className="w-full p-4 rounded-xl border dark:bg-slate-800 dark:border-slate-700"
-              required
-            />
-
-            <input
-              name="contactPersonName"
-              placeholder="Contact Person Name"
-              value={formData.contactPersonName}
-              onChange={handleChange}
-              className="w-full p-4 rounded-xl border dark:bg-slate-800 dark:border-slate-700"
-              required
-            />
-
-            <div className="grid md:grid-cols-2 gap-4">
-
-              <input
-                type="email"
-                name="email"
-                placeholder="Official Email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full p-4 rounded-xl border dark:bg-slate-800 dark:border-slate-700"
-                required
-              />
-
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone Number"
-                value={formData.phone}
-                onChange={handleChange}
-                className="w-full p-4 rounded-xl border dark:bg-slate-800 dark:border-slate-700"
-                required
-              />
-
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-
-              <select
-                name="propertyType"
-                value={formData.propertyType}
-                onChange={handleChange}
-                className="w-full p-4 rounded-xl border dark:bg-slate-800 dark:border-slate-700"
-              >
-                <option value="APARTMENT">Apartment</option>
-                <option value="VILLA">Villa</option>
-                <option value="GATED_COMMUNITY">Gated Community</option>
-              </select>
-
-              
-              <input
-    type="number"
-    name="numberOfApartments"
-    min="1"
-    step="1"
-    placeholder="Number of Apartments"
-    value={formData.numberOfApartments}
-    onChange={handleChange}
-    className="w-full p-4 rounded-xl border dark:bg-slate-800 dark:border-slate-700"
-    required
-/>
-
-            </div>
-
-            <textarea
-              name="address"
-              placeholder="Complete Address"
-              value={formData.address}
-              onChange={handleChange}
-              rows={3}
-              className="w-full p-4 rounded-xl border resize-none dark:bg-slate-800 dark:border-slate-700"
-              required
-            />
-
-            <div className="grid md:grid-cols-3 gap-4">
-
-              <input
-                name="city"
-                placeholder="City"
-                value={formData.city}
-                onChange={handleChange}
-                className="w-full p-4 rounded-xl border dark:bg-slate-800 dark:border-slate-700"
-                required
-              />
-
-              <input
-                name="state"
-                placeholder="State"
-                value={formData.state}
-                onChange={handleChange}
-                className="w-full p-4 rounded-xl border dark:bg-slate-800 dark:border-slate-700"
-                required
-              />
-
-              <input
-                name="pincode"
-                placeholder="Pincode"
-                value={formData.pincode}
-                onChange={handleChange}
-                className="w-full p-4 rounded-xl border dark:bg-slate-800 dark:border-slate-700"
-                required
-              />
-
-            </div>
-
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-xl font-semibold"
-            >
-              Register Apartment
-            </motion.button>
-
-          </form>
-
         </div>
 
-      </motion.div>
+        {/* Registration Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          
+          {/* Company & Contact Person */}
+          <div className="grid sm:grid-cols-2 gap-4">
+            <FormInput
+              icon={<Building size={18} />}
+              label="Company Name"
+              name="companyName"
+              placeholder="e.g. Skyline Residency"
+              value={formData.companyName}
+              onChange={handleChange}
+              disabled={loading}
+              required
+            />
 
-    </section>
+            <FormInput
+              icon={<User size={18} />}
+              label="Contact Person Name"
+              name="contactPersonName"
+              placeholder="e.g. Alex Mercer"
+              value={formData.contactPersonName}
+              onChange={handleChange}
+              disabled={loading}
+              required
+            />
+          </div>
+
+          {/* Email & Phone */}
+          <div className="grid sm:grid-cols-2 gap-4">
+            <FormInput
+              icon={<Mail size={18} />}
+              label="Official Email"
+              type="email"
+              name="email"
+              placeholder="admin@skyline.com"
+              value={formData.email}
+              onChange={handleChange}
+              disabled={loading}
+              required
+            />
+
+            <FormInput
+              icon={<Phone size={18} />}
+              label="Phone Number"
+              type="tel"
+              name="phone"
+              placeholder="+91 98765 43210"
+              value={formData.phone}
+              onChange={handleChange}
+              disabled={loading}
+              required
+            />
+          </div>
+
+          {/* Property Type & Count */}
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                Property Type
+              </label>
+              <div className="relative group">
+                <Building2
+                  size={18}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors"
+                />
+                <select
+                  name="propertyType"
+                  value={formData.propertyType}
+                  onChange={handleChange}
+                  disabled={loading}
+                  className="
+                    w-full
+                    rounded-xl
+                    border
+                    border-slate-700/80
+                    bg-slate-950/60
+                    py-3
+                    pl-10
+                    pr-4
+                    text-sm
+                    text-white
+                    outline-none
+                    transition-all
+                    duration-300
+                    focus:bg-slate-950/90
+                    focus:border-cyan-400
+                    focus:ring-4
+                    focus:ring-cyan-500/15
+                    disabled:opacity-50
+                    cursor-pointer
+                  "
+                >
+                  <option value="APARTMENT" className="bg-slate-900 text-white">Apartment</option>
+                  <option value="VILLA" className="bg-slate-900 text-white">Villa</option>
+                  <option value="GATED_COMMUNITY" className="bg-slate-900 text-white">Gated Community</option>
+                </select>
+              </div>
+            </div>
+
+            <FormInput
+              icon={<Building2 size={18} />}
+              label="Number of Apartments"
+              type="number"
+              min="1"
+              step="1"
+              name="numberOfApartments"
+              placeholder="e.g. 150"
+              value={formData.numberOfApartments}
+              onChange={handleChange}
+              disabled={loading}
+              required
+            />
+          </div>
+
+          {/* Complete Address */}
+          <div className="space-y-1.5">
+            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+              Complete Address
+            </label>
+            <div className="relative group">
+              <MapPin
+                size={18}
+                className="absolute left-3.5 top-4 text-slate-400 group-focus-within:text-cyan-400 transition-colors"
+              />
+              <textarea
+                name="address"
+                placeholder="Street address, landmark, area details..."
+                value={formData.address}
+                onChange={handleChange}
+                disabled={loading}
+                rows={3}
+                required
+                className="
+                  w-full
+                  rounded-xl
+                  border
+                  border-slate-700/80
+                  bg-slate-950/60
+                  py-3
+                  pl-10
+                  pr-4
+                  text-sm
+                  text-white
+                  placeholder-slate-500
+                  outline-none
+                  resize-none
+                  transition-all
+                  duration-300
+                  focus:bg-slate-950/90
+                  focus:border-cyan-400
+                  focus:ring-4
+                  focus:ring-cyan-500/15
+                  disabled:opacity-50
+                "
+              />
+            </div>
+          </div>
+
+          {/* City, State, Pincode */}
+          <div className="grid sm:grid-cols-3 gap-4">
+            <FormInput
+              icon={<MapPin size={18} />}
+              label="City"
+              name="city"
+              placeholder="e.g. Mumbai"
+              value={formData.city}
+              onChange={handleChange}
+              disabled={loading}
+              required
+            />
+
+            <FormInput
+              icon={<MapPin size={18} />}
+              label="State"
+              name="state"
+              placeholder="e.g. Maharashtra"
+              value={formData.state}
+              onChange={handleChange}
+              disabled={loading}
+              required
+            />
+
+            <FormInput
+              icon={<MapPin size={18} />}
+              label="Pincode"
+              name="pincode"
+              placeholder="400001"
+              value={formData.pincode}
+              onChange={handleChange}
+              disabled={loading}
+              required
+            />
+          </div>
+
+          {/* Submit Button */}
+          <div className="pt-3">
+            <motion.button
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.98 }}
+              disabled={loading}
+              className="
+                group
+                relative
+                w-full
+                flex
+                items-center
+                justify-center
+                gap-2
+                py-4
+                px-6
+                rounded-xl
+                font-extrabold
+                text-white
+                bg-gradient-to-r
+                from-blue-600
+                via-cyan-600
+                to-blue-600
+                bg-[length:200%_auto]
+                hover:bg-right
+                shadow-lg
+                shadow-cyan-500/25
+                hover:shadow-cyan-500/40
+                transition-all
+                duration-500
+                active:scale-98
+                disabled:opacity-60
+                disabled:cursor-not-allowed
+              "
+            >
+              {loading ? (
+                <>
+                  <Loader2 size={18} className="animate-spin text-white" />
+                  <span>Submitting Registration...</span>
+                </>
+              ) : (
+                <>
+                  <span>Register Apartment</span>
+                  <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+                </>
+              )}
+            </motion.button>
+          </div>
+
+          <p className="text-center text-[11px] text-slate-500 pt-2">
+            By registering, you agree to AquaTrack's Smart Water Management Policies.
+          </p>
+
+        </form>
+      </motion.div>
+    </div>
+  );
+}
+
+// Reusable Form Field Component
+function FormInput({ icon, label, type = "text", name, placeholder, value, onChange, disabled, required, min, step }) {
+  return (
+    <div className="space-y-1.5">
+      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+        {label}
+      </label>
+      <div className="relative group">
+        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors">
+          {icon}
+        </span>
+        <input
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          disabled={disabled}
+          required={required}
+          min={min}
+          step={step}
+          className="
+            w-full
+            rounded-xl
+            border
+            border-slate-700/80
+            bg-slate-950/60
+            py-3
+            pl-10
+            pr-4
+            text-sm
+            text-white
+            placeholder-slate-500
+            outline-none
+            transition-all
+            duration-300
+            focus:bg-slate-950/90
+            focus:border-cyan-400
+            focus:ring-4
+            focus:ring-cyan-500/15
+            disabled:opacity-50
+          "
+        />
+      </div>
+    </div>
   );
 }
