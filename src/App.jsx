@@ -7,7 +7,9 @@ import { Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import RegisterApartment from "./pages/RegisterApartment";
 
+
 import Login from "./pages/auth/Login";
+import Profile from "./pages/profile/Profile";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 
@@ -28,7 +30,7 @@ import ApartmentList from "./pages/property/ApartmentList";
 import BuildingList from "./pages/property/BuildingList";
 import ManagerList from "./pages/property/ManagerList";
 import FloorList from "./pages/property/FloorList";
-import PaymentList from "./pages/property/PaymentList";
+
 
 
 // ==========================================
@@ -143,6 +145,17 @@ export default function App() {
                 }
             />
 
+            <Route
+                path="/admin/profile"
+                element={
+                    <ProtectedRoute
+                        allowedRoles={["SUPER_ADMIN"]}
+                    >
+                        <Profile />
+                    </ProtectedRoute>
+                }
+            />
+
             {/* ==========================================
                 PROPERTY_ADMIN Routes
             ========================================== */}
@@ -203,13 +216,14 @@ export default function App() {
             />
 
             <Route
-                path="/property/payments"
+                path="/property/profile"
                 element={
                     <ProtectedRoute allowedRoles={["PROPERTY_ADMIN"]}>
-                        <PaymentList />
+                        <Profile />
                     </ProtectedRoute>
                 }
-            />
+            />  
+
 
 
             {/* ==========================================
@@ -307,6 +321,15 @@ export default function App() {
                 }
             />
 
+            <Route
+                path="/manager/profile"
+                element={
+                    <ProtectedRoute allowedRoles={["MANAGER"]}>
+                        <Profile />
+                    </ProtectedRoute>
+                }
+            />
+
 
             {/* ==========================================
                 RESIDENT Routes
@@ -369,6 +392,17 @@ export default function App() {
                         allowedRoles={["RESIDENT"]}
                     >
                         <MyPaymentsList />        
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/resident/profile"
+                element={
+                    <ProtectedRoute
+                        allowedRoles={["RESIDENT"]}
+                    >
+                        <Profile />
                     </ProtectedRoute>
                 }
             />

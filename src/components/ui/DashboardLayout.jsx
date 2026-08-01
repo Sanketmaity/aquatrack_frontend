@@ -1,22 +1,72 @@
+import { useState } from "react";
+
 import Sidebar from "../layout/Sidebar";
 import Topbar from "../layout/Topbar";
+import MobileTopbar from "../layout/MobileTopbar";
+import MobileBottomNav from "../layout/MobileBottomNav";
+import MobileDrawer from "../layout/MobileDrawer";
 
 export default function DashboardLayout({ children }) {
-    return (
-        <div className="min-h-screen bg-slate-100/70 text-slate-800 relative overflow-hidden">
-            {/* Fixed Left Sidebar */}
-            <Sidebar />
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-            {/* Main Content Area - Positioned to the right of the fixed sidebar */}
-            <div className="absolute inset-y-0 left-72 right-0 flex flex-col overflow-hidden">
-                {/* Sticky Top Navigation */}
-                <Topbar />
+  // Get current user role from localStorage
+  const role = localStorage.getItem("role") || "SUPER_ADMIN";
 
-                {/* Scrollable Page Body */}
-                <main className="flex-1 overflow-y-auto p-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                    {children}
-                </main>
-            </div>
+  return (
+    <div className="min-h-screen bg-slate-100/70">
+
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:block">
+        <Sidebar role={role} />
+      </div>
+
+      {/* Mobile Drawer */}
+      <MobileDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        role={role}
+      />
+
+      {/* Main Layout */}
+      <div className="flex min-h-screen flex-col lg:ml-72">
+
+        {/* Desktop Topbar */}
+        <div className="hidden lg:block">
+          <Topbar />
         </div>
-    );
+
+        {/* Mobile Topbar */}
+        <div className="lg:hidden">
+          <MobileTopbar
+            onMenuClick={() => setDrawerOpen(true)}
+          />
+        </div>
+
+        {/* Page Content */}
+        <main
+  className="
+    flex-1
+    overflow-y-auto
+
+    pt-[84px]
+    px-4
+    pb-24
+
+    sm:px-6
+
+    lg:p-8
+  "
+>
+          {children}
+        </main>
+
+        {/* Mobile Bottom Navigation */}
+        <div className="lg:hidden">
+          <MobileBottomNav role={role} />
+        </div>
+
+      </div>
+
+    </div>
+  );
 }
