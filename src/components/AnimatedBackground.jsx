@@ -24,7 +24,7 @@ export default function AnimatedBackground() {
     <div className="fixed inset-0 overflow-hidden -z-10 pointer-events-none select-none">
       
       {/* 1. Deep Obsidian Base Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#020617] via-[#0F172A] to-[#020617]" />
 
       {/* 2. Electric Cyan Shimmer Ray */}
       <motion.div
@@ -37,7 +37,7 @@ export default function AnimatedBackground() {
           repeatDelay: 3,
           ease: "easeInOut",
         }}
-        className="absolute -top-1/2 left-0 w-96 h-[200%] bg-gradient-to-r from-transparent via-cyan-400/15 to-transparent transform -rotate-45 blur-2xl"
+        className="absolute -top-1/2 left-0 w-96 h-[200%] bg-gradient-to-r from-transparent via-[#22D3EE]/12 to-transparent transform -rotate-45 blur-2xl"
       />
 
       {/* 3. Glowing Neon Blob 1 (Top Left - Electric Cyan) */}
@@ -53,7 +53,7 @@ export default function AnimatedBackground() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute -top-16 -left-16 h-[28rem] w-[28rem] rounded-full bg-gradient-to-tr from-cyan-500/25 via-blue-600/30 to-teal-400/20 blur-3xl shadow-[0_0_80px_rgba(6,182,212,0.3)]"
+        className="absolute -top-16 -left-16 h-[28rem] w-[28rem] rounded-full bg-gradient-to-tr from-[#06B6D4]/25 via-[#0EA5E9]/30 to-[#10B981]/20 blur-3xl shadow-[0_0_80px_rgba(6,182,212,0.3)]"
       />
 
       {/* 4. Glowing Neon Blob 2 (Bottom Right - Indigo Sapphire) */}
@@ -69,7 +69,7 @@ export default function AnimatedBackground() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute -bottom-24 -right-24 h-[32rem] w-[32rem] rounded-full bg-gradient-to-br from-indigo-600/30 via-blue-700/25 to-sky-500/20 blur-3xl shadow-[0_0_90px_rgba(59,130,246,0.3)]"
+        className="absolute -bottom-24 -right-24 h-[32rem] w-[32rem] rounded-full bg-gradient-to-br from-[#0EA5E9]/25 via-[#06B6D4]/20 to-[#38BDF8]/15 blur-3xl shadow-[0_0_90px_rgba(14,165,233,0.25)]"
       />
 
       {/* 5. Center Pulsing Glow Orb */}
@@ -85,7 +85,7 @@ export default function AnimatedBackground() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-1/2 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-blue-500/20 via-cyan-400/25 to-teal-300/20 blur-3xl"
+        className="absolute top-1/2 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-[#0EA5E9]/18 via-[#06B6D4]/22 to-[#34D399]/15 blur-3xl"
       />
 
       {/* 6. Glowing Neon Water Ripples */}
@@ -106,7 +106,7 @@ export default function AnimatedBackground() {
               delay: ripple.delay,
               ease: "easeOut",
             }}
-            className="w-32 h-32 rounded-full border-2 border-cyan-400/60 shadow-[0_0_15px_rgba(34,211,238,0.4)] blur-[0.5px]"
+            className="w-32 h-32 rounded-full border-2 border-[#22D3EE]/60 shadow-[0_0_15px_rgba(34,211,238,0.4)] blur-[0.5px]"
           />
         </div>
       ))}
@@ -136,15 +136,15 @@ export default function AnimatedBackground() {
           className="
             absolute 
             rounded-full 
-            bg-cyan-500/10 
+            bg-[#06B6D4]/10 
             backdrop-blur-md 
             border 
-            border-cyan-400/40 
+            border-[#22D3EE]/40 
             shadow-[0_0_12px_rgba(6,182,212,0.3)]
           "
         >
           {/* Specular Glow Dot */}
-          <div className="absolute top-1 left-1.5 w-2 h-2 rounded-full bg-cyan-200/90 blur-[0.5px]" />
+          <div className="absolute top-1 left-1.5 w-2 h-2 rounded-full bg-[#38BDF8]/90 blur-[0.5px]" />
         </motion.div>
       ))}
 

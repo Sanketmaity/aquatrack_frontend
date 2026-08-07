@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 import {
   ChevronDown,
@@ -17,6 +18,7 @@ export default function ProfileDropdown({ mobile = false }) {
   // ==========================================
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // ==========================================
   // State
@@ -175,15 +177,15 @@ const handleLogout = () => {
       rounded-full
 
       bg-gradient-to-br
-      from-blue-600
-      to-cyan-500
+      from-[#0EA5E9]
+      to-[#06B6D4]
 
       text-sm
       font-bold
       text-white
 
       shadow-md
-      shadow-cyan-500/20
+      shadow-[#0EA5E9]/20
 
       transition-all
       duration-200
@@ -216,22 +218,29 @@ const handleLogout = () => {
       rounded-2xl
 
       border
-      border-slate-200
+      border-[#E2E8F0]
+      dark:border-slate-700
 
-      bg-white
+      bg-[#FFFFFF]
+      dark:bg-slate-950
 
       px-4
       py-2
 
       shadow-sm
 
+      text-slate-900
+      dark:text-slate-100
+
       transition-all
       duration-300
 
-      hover:border-cyan-300
-      hover:bg-slate-50
+      hover:border-[#0EA5E9]/40
+      hover:bg-[#F8FAFC]
+      dark:hover:bg-slate-900
       hover:shadow-md
-      hover:shadow-cyan-100
+      hover:shadow-[#0EA5E9]/10
+      dark:hover:shadow-[#38BDF8]/10
     "
   >
     {/* Avatar */}
@@ -249,15 +258,15 @@ const handleLogout = () => {
           rounded-full
 
           bg-gradient-to-br
-          from-blue-600
-          to-cyan-500
+          from-[#0EA5E9]
+          to-[#06B6D4]
 
           text-sm
           font-bold
           text-white
 
           shadow-md
-          shadow-cyan-500/20
+          shadow-[#0EA5E9]/20
 
           transition-transform
           duration-300
@@ -284,8 +293,26 @@ const handleLogout = () => {
           border-2
           border-white
 
-          bg-emerald-500
+          bg-[#F8FAFC]/90
+          blur-[0.5px]
+        "
+      />
 
+      <span
+        className="
+          absolute
+          bottom-0
+          right-0
+
+          h-3
+          w-3
+
+          rounded-full
+
+          border-2
+          border-white
+
+          bg-[#10B981]
           animate-pulse
         "
       />
@@ -296,7 +323,7 @@ const handleLogout = () => {
 
     <div className="text-left">
 
-      <h4 className="text-sm font-semibold capitalize text-slate-800">
+      <h4 className="text-sm font-semibold capitalize text-[#0F172A] dark:text-[#F8FAFC]">
         {userName}
       </h4>
 
@@ -307,7 +334,8 @@ const handleLogout = () => {
 
           rounded-full
 
-          bg-cyan-50
+          bg-[#0EA5E9]/8
+          dark:bg-cyan-400/10
 
           px-2.5
           py-0.5
@@ -318,7 +346,8 @@ const handleLogout = () => {
 
           tracking-wider
 
-          text-cyan-700
+          text-[#0EA5E9]
+          dark:text-cyan-200
         "
       >
         {role.replaceAll("_", " ")}
@@ -336,8 +365,8 @@ const handleLogout = () => {
 
         ${
           open
-            ? "rotate-180 text-cyan-600"
-            : "text-slate-400 group-hover:text-slate-700"
+            ? "rotate-180 text-[#0EA5E9]"
+            : "text-[#475569] group-hover:text-[#0F172A]"
         }
       `}
     />
@@ -383,13 +412,16 @@ const handleLogout = () => {
         rounded-2xl
 
         border
-        border-slate-200
+        border-[#E2E8F0]
+        dark:border-slate-700
 
-        bg-white/95
+        bg-[#FFFFFF]/95
+        dark:bg-slate-950/95
         backdrop-blur-xl
 
         shadow-2xl
-        shadow-slate-900/10
+        shadow-[#0F172A]/10
+        dark:shadow-black/20
 
         ${
           mobile
@@ -403,7 +435,7 @@ const handleLogout = () => {
           User Header
       =============================== */}
 
-      <div className="border-b border-slate-200 px-5 py-4">
+      <div className="border-b border-[#E2E8F0] px-5 py-4">
 
         <div className="flex items-center gap-4">
 
@@ -418,15 +450,15 @@ const handleLogout = () => {
               rounded-full
 
               bg-gradient-to-br
-              from-blue-600
-              to-cyan-500
+              from-[#0EA5E9]
+              to-[#06B6D4]
 
               text-base
               font-bold
               text-white
 
               shadow-lg
-              shadow-cyan-500/20
+              shadow-[#0EA5E9]/20
             "
           >
             {initials}
@@ -434,11 +466,11 @@ const handleLogout = () => {
 
           <div className="min-w-0 flex-1">
 
-            <h3 className="truncate text-sm font-semibold capitalize text-slate-800">
+            <h3 className="truncate text-sm font-semibold capitalize text-[#0F172A]">
               {userName}
             </h3>
 
-            <p className="truncate text-xs text-slate-500">
+            <p className="truncate text-xs text-[#475569]">
               {email}
             </p>
 
@@ -449,7 +481,7 @@ const handleLogout = () => {
 
                 rounded-full
 
-                bg-cyan-50
+                bg-[#0EA5E9]/8
 
                 px-2.5
                 py-0.5
@@ -460,7 +492,7 @@ const handleLogout = () => {
 
                 tracking-wider
 
-                text-cyan-700
+                text-[#0EA5E9]
               "
             >
               {role.replaceAll("_", " ")}
@@ -496,13 +528,16 @@ const handleLogout = () => {
             py-3
 
             text-sm
-            text-slate-700
+            text-[#475569]
+            dark:text-slate-200
 
             transition-all
             duration-200
 
-            hover:bg-slate-100
-            hover:text-cyan-600
+            hover:bg-[#F8FAFC]
+            dark:hover:bg-slate-800
+            hover:text-[#0EA5E9]
+            dark:hover:text-[#38BDF8]
           "
         >
           <div className="flex items-center gap-3">
@@ -512,20 +547,20 @@ const handleLogout = () => {
               className="transition-transform group-hover:scale-110"
             />
 
-            <span>My Profile</span>
+            <span>{t("menu.profile")}</span>
 
           </div>
 
           <ChevronRight
             size={16}
             className="
-              text-slate-400
+              text-[#475569]
 
               transition-all
               duration-200
 
               group-hover:translate-x-1
-              group-hover:text-cyan-600
+              group-hover:text-[#0EA5E9]
             "
           />
 
@@ -537,7 +572,7 @@ const handleLogout = () => {
                 Footer
             =============================== */}
 
-            <div className="border-t border-slate-200 p-2">
+            <div className="border-t border-[#E2E8F0] p-2">
 
               <motion.button
                 whileHover={{ x: 4 }}
@@ -560,12 +595,15 @@ const handleLogout = () => {
                   font-medium
 
                   text-red-600
+                  dark:text-red-300
 
                   transition-all
                   duration-200
 
                   hover:bg-red-50
+                  dark:hover:bg-red-900/40
                   hover:text-red-700
+                  dark:hover:text-red-100
                 "
               >
                 <div className="flex items-center gap-3">
@@ -580,7 +618,7 @@ const handleLogout = () => {
                     "
                   />
 
-                  <span>Logout</span>
+                  <span>{t("menu.logout")}</span>
 
                 </div>
 

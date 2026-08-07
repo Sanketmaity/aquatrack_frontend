@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { Droplets } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { menuConfig } from "../../config/menuConfig";
 
@@ -7,6 +8,7 @@ export default function Sidebar({
   role = "SUPER_ADMIN",
 }) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // ==========================================
   // Navigation
@@ -56,12 +58,12 @@ export default function Sidebar({
         overflow-hidden
 
         border-r
-        border-slate-800/70
+        border-[#334155]/70
 
-        bg-slate-900/95
+        bg-[#0F172A]/95
         backdrop-blur-xl
 
-        text-white
+        text-[#F8FAFC]
 
         shadow-2xl
       "
@@ -70,21 +72,21 @@ export default function Sidebar({
           Background Glow
       ====================================== */}
 
-      <div className="pointer-events-none absolute -left-24 -top-20 h-64 w-64 rounded-full bg-cyan-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute -left-24 -top-20 h-64 w-64 rounded-full bg-[#06B6D4]/10 blur-3xl" />
 
-      <div className="pointer-events-none absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-blue-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-[#0EA5E9]/10 blur-3xl" />
 
       {/* ======================================
           Logo
       ====================================== */}
 
-      <div className="border-b border-slate-800/70 px-7 py-6">
+      <div className="border-b border-[#334155]/70 px-7 py-6">
 
         <div className="flex items-center gap-4">
 
           <div className="relative">
 
-            <div className="absolute inset-0 rounded-xl bg-cyan-500 blur-md opacity-40" />
+            <div className="absolute inset-0 rounded-xl bg-[#0EA5E9] blur-md opacity-40" />
 
             <div
               className="
@@ -99,11 +101,11 @@ export default function Sidebar({
                 rounded-xl
 
                 bg-gradient-to-tr
-                from-blue-600
-                to-cyan-500
+                from-[#0EA5E9]
+                to-[#06B6D4]
 
                 shadow-lg
-                shadow-cyan-500/20
+                shadow-[#0EA5E9]/20
               "
             >
               <Droplets size={24} />
@@ -133,14 +135,14 @@ export default function Sidebar({
 
               <div className="relative">
 
-                <span className="block h-2 w-2 rounded-full bg-emerald-400" />
+                <span className="block h-2 w-2 rounded-full bg-[#34D399]" />
 
-                <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-70" />
+                <span className="absolute inset-0 rounded-full bg-[#34D399] animate-ping opacity-70" />
 
               </div>
 
-              <p className="text-xs text-slate-400">
-                Enterprise Water Management
+              <p className="text-xs text-[#CBD5E1]/70">
+                {t("dashboard.enterprise")}
               </p>
 
             </div>
@@ -169,7 +171,7 @@ export default function Sidebar({
         {menuItems.map((item) => {
           const Icon = item.icon;
 
-          if (item.title === "Logout") {
+          if (item.title === "menu.logout" || item.title === "Logout") {
             return (
               <button
                 key={item.title}
@@ -198,7 +200,7 @@ export default function Sidebar({
                 <Icon size={20} />
 
                 <span className="text-sm font-medium">
-                  Logout
+                  {t("menu.logout")}
                 </span>
               </button>
             );
@@ -232,8 +234,8 @@ export default function Sidebar({
 
                     ${
                       isActive
-                        ? "border-cyan-400 bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-600/20"
-                        : "border-transparent text-slate-300 hover:bg-slate-800 hover:text-white"
+                        ? "border-[#38BDF8] bg-gradient-to-r from-[#0EA5E9] to-[#06B6D4] text-white shadow-lg shadow-[#0EA5E9]/20"
+                        : "border-transparent text-[#CBD5E1] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
                     }
                   `}
                 >
@@ -245,13 +247,13 @@ export default function Sidebar({
                       ${
                         isActive
                           ? "scale-110"
-                          : "group-hover:scale-110 group-hover:text-cyan-400"
+                          : "group-hover:scale-110 group-hover:text-[#38BDF8]"
                       }
                     `}
                   />
 
                   <span className="text-sm font-medium">
-                    {item.title}
+                    {t(item.title)}
                   </span>
 
                 </div>
@@ -265,11 +267,11 @@ export default function Sidebar({
           Footer
       ====================================== */}
 
-      <div className="border-t border-slate-800/70 bg-slate-950/40 p-4">
+      <div className="border-t border-[#334155]/70 bg-[#020617]/40 p-4">
 
         <div className="flex items-center justify-between">
 
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-[#CBD5E1]/50">
             © {new Date().getFullYear()} AquaTrack
           </span>
 
@@ -278,9 +280,9 @@ export default function Sidebar({
               rounded-full
 
               border
-              border-cyan-500/20
+              border-[#38BDF8]/20
 
-              bg-cyan-500/10
+              bg-[#38BDF8]/10
 
               px-2
               py-0.5
@@ -288,7 +290,7 @@ export default function Sidebar({
               text-[10px]
               font-semibold
 
-              text-cyan-400
+              text-[#38BDF8]
             "
           >
             Enterprise

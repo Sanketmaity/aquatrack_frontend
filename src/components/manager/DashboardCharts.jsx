@@ -1,120 +1,343 @@
 import {
   ResponsiveContainer,
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
   PieChart,
   Pie,
   Cell,
-  BarChart,
-  Bar,
+  CartesianGrid,
   XAxis,
   YAxis,
   Tooltip,
-  CartesianGrid,
   Legend,
 } from "recharts";
 
-const chartColors = ["#0ea5e9", "#22c55e", "#f97316"];
+import {
+  Droplets,
+  Building2,
+  CreditCard,
+  Receipt,
+  IndianRupee,
+} from "lucide-react";
 
-export default function DashboardCharts({ summary }) {
-  const householdCount = summary?.totalHouseholds ?? 0;
-  const residentCount = summary?.totalResidents ?? 0;
-  const averageResidentsPerHousehold = householdCount
-    ? Number((residentCount / householdCount).toFixed(1))
-    : 0;
+// ==========================================
+// Colors
+// ==========================================
 
-  const pieData = [
-    { name: "Households", value: householdCount },
-    { name: "Residents", value: residentCount },
+const COLORS = [
+  "#2563EB",
+  "#10B981",
+  "#F59E0B",
+];
+
+const ChartCard = ({ title, icon: Icon, children }) => (
+  <section className="rounded-3xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all duration-300">
+    <div className="flex items-center gap-3 border-b border-slate-100 px-6 py-4">
+      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50">
+        <Icon size={20} className="text-blue-600" />
+      </div>
+
+      <h2 className="text-lg font-semibold text-slate-800">
+        {title}
+      </h2>
+    </div>
+
+    <div className="p-5 h-96">
+      {children}
+    </div>
+  </section>
+);
+
+export default function DashboardCharts({
+
+  monthlyConsumption = [],
+
+  buildingUsage = [],
+
+  paymentStatus,
+
+  billStatus,
+
+  revenueTrend = [],
+
+}) {
+
+  const paymentData = [
+
+    {
+      name: "Paid",
+      value: paymentStatus?.paidBills ?? 0,
+    },
+
+    {
+      name: "Pending",
+      value: paymentStatus?.pendingBills ?? 0,
+    },
+
   ];
 
-  const barData = [
-    { label: "Households", value: householdCount },
-    { label: "Residents", value: residentCount },
-    { label: "Avg / Household", value: averageResidentsPerHousehold },
+  const billData = [
+
+    {
+      name: "Paid",
+      value: billStatus?.paid ?? 0,
+    },
+
+    {
+      name: "Pending",
+      value: billStatus?.pending ?? 0,
+    },
+
+    {
+      name: "Overdue",
+      value: billStatus?.overdue ?? 0,
+    },
+
   ];
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[1.3fr_1fr]">
-      <section className="rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-sm shadow-slate-200/50">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
-          <div>
-            <p className="text-sm font-semibold text-slate-500 uppercase tracking-[0.24em]">
-              Building Insights
-            </p>
-            <h2 className="mt-2 text-2xl font-bold text-slate-900">
-              Operational distribution
-            </h2>
-          </div>
-          <div className="rounded-2xl bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-600">
-            Updated from live summary
-          </div>
-        </div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          <div className="h-72 rounded-3xl bg-slate-50 p-4 shadow-inner">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={pieData}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={48}
-                  outerRadius={88}
-                  paddingAngle={4}
-                  stroke="transparent"
+    <div className="space-y-6">
+
+      {/* ========================================== */}
+      {/* Monthly Water Consumption */}
+      {/* ========================================== */}
+
+      <ChartCard
+        title="Monthly Water Consumption"
+        icon={Droplets}
+      >
+
+        <ResponsiveContainer>
+
+          <LineChart data={monthlyConsumption}>
+
+            <CartesianGrid
+              strokeDasharray="3 3"
+              vertical={false}
+            />
+
+            <XAxis
+              dataKey="month"
+            />
+
+            <YAxis />
+
+            <Tooltip />
+
+            <Legend />
+
+            <Line
+              type="monotone"
+              dataKey="totalConsumption"
+              stroke="#2563EB"
+              strokeWidth={3}
+              dot={{ r: 5 }}
+              activeDot={{ r: 7 }}
+            />
+
+          </LineChart>
+
+        </ResponsiveContainer>
+
+      </ChartCard>
+
+      {/* ========================================== */}
+      {/* Building Usage + Payment */}
+      {/* ========================================== */}
+
+      <div className="grid gap-6 lg:grid-cols-2">
+
+        <ChartCard
+          title="Building Water Usage"
+          icon={Building2}
+        >
+
+          <ResponsiveContainer>
+
+            <BarChart data={buildingUsage}>
+
+              <CartesianGrid
+                strokeDasharray="3 3"
+                vertical={false}
+              />
+
+              <XAxis
+                dataKey="buildingName"
+              />
+
+              <YAxis />
+
+              <Tooltip />
+
+              <Bar
+                dataKey="totalConsumption"
+                radius={[10, 10, 0, 0]}
+                fill="#10B981"
+              />
+
+            </BarChart>
+
+          </ResponsiveContainer>
+
+        </ChartCard>
+
+        <ChartCard
+          title="Payment Status"
+          icon={CreditCard}
+        >
+
+          <ResponsiveContainer>
+
+            <PieChart>
+
+              <Pie
+                data={paymentData}
+                dataKey="value"
+                nameKey="name"
+                innerRadius={70}
+                outerRadius={110}
+                paddingAngle={3}
+              >
+
+                {paymentData.map((entry, index) => (
+
+                  <Cell
+                    key={entry.name}
+                    fill={COLORS[index]}
+                  />
+
+                ))}
+
+              </Pie>
+
+              <Tooltip />
+
+              <Legend />
+
+            </PieChart>
+
+          </ResponsiveContainer>
+
+        </ChartCard>
+
+      </div>
+
+      {/* ========================================== */}
+      {/* Bill Status + Revenue */}
+      {/* ========================================== */}
+
+      <div className="grid gap-6 lg:grid-cols-2">
+
+        <ChartCard
+          title="Bill Status"
+          icon={Receipt}
+        >
+
+          <ResponsiveContainer>
+
+            <PieChart>
+
+              <Pie
+                data={billData}
+                dataKey="value"
+                nameKey="name"
+                innerRadius={70}
+                outerRadius={110}
+                paddingAngle={3}
+              >
+
+                {billData.map((entry, index) => (
+
+                  <Cell
+                    key={entry.name}
+                    fill={COLORS[index]}
+                  />
+
+                ))}
+
+              </Pie>
+
+              <Tooltip />
+
+              <Legend />
+
+            </PieChart>
+
+          </ResponsiveContainer>
+
+        </ChartCard>
+
+        <ChartCard
+          title="Revenue Trend"
+          icon={IndianRupee}
+        >
+
+          <ResponsiveContainer>
+
+            <AreaChart data={revenueTrend}>
+
+              <defs>
+
+                <linearGradient
+                  id="revenue"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
                 >
-                  {pieData.map((entry, index) => (
-                    <Cell key={entry.name} fill={chartColors[index % chartColors.length]} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  formatter={(value) => [value, "Count"]}
-                  cursor={{ fill: "rgba(15, 23, 42, 0.08)" }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-            <div className="mt-4 grid grid-cols-2 gap-3 px-2 text-sm text-slate-600">
-              {pieData.map((item, index) => (
-                <div key={item.name} className="rounded-2xl bg-white px-3 py-2 shadow-sm border border-slate-200/80">
-                  <div className="flex items-center gap-2 text-slate-500">
-                    <span
-                      className="h-2.5 w-2.5 rounded-full"
-                      style={{ backgroundColor: chartColors[index % chartColors.length] }}
-                    />
-                    {item.name}
-                  </div>
-                  <p className="mt-2 text-lg font-semibold text-slate-900">{item.value}</p>
-                </div>
-              ))}
-            </div>
-          </div>
 
-          <div className="rounded-3xl border border-slate-200/80 bg-slate-50 p-4">
-            <div className="mb-4">
-              <p className="text-sm font-semibold text-slate-500 uppercase tracking-[0.24em]">
-                Executive summary
-              </p>
-              <h3 className="mt-2 text-lg font-bold text-slate-900">
-                Headcount and occupancy trend
-              </h3>
-            </div>
+                  <stop
+                    offset="0%"
+                    stopColor="#2563EB"
+                    stopOpacity={0.45}
+                  />
 
-            <div className="h-72">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={barData} margin={{ top: 16, right: 8, left: -10, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
-                  <XAxis dataKey="label" tickLine={false} axisLine={false} tick={{ fill: "#475569", fontSize: 12 }} />
-                  <YAxis tickLine={false} axisLine={false} tick={{ fill: "#475569", fontSize: 12 }} />
-                  <Tooltip cursor={{ fill: "rgba(15, 23, 42, 0.06)" }} />
-                  <Legend verticalAlign="top" height={24} wrapperStyle={{ paddingBottom: 8 }} />
-                  <Bar dataKey="value" fill="#0ea5e9" radius={[12, 12, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        </div>
-      </section>
+                  <stop
+                    offset="100%"
+                    stopColor="#2563EB"
+                    stopOpacity={0}
+                  />
+
+                </linearGradient>
+
+              </defs>
+
+              <CartesianGrid
+                strokeDasharray="3 3"
+                vertical={false}
+              />
+
+              <XAxis
+                dataKey="month"
+              />
+
+              <YAxis />
+
+              <Tooltip />
+
+              <Area
+                type="monotone"
+                dataKey="revenue"
+                stroke="#2563EB"
+                strokeWidth={3}
+                fill="url(#revenue)"
+              />
+
+            </AreaChart>
+
+          </ResponsiveContainer>
+
+        </ChartCard>
+
+      </div>
+
     </div>
+
   );
+
 }

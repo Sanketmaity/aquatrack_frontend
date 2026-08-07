@@ -1,10 +1,13 @@
 import { Mail } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function EmailInput({ value, onChange, disabled, name = "email" }) {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-1.5">
       <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
-        Email Address
+        {t("auth.emailLabel")}
       </label>
       <div className="relative group">
         <Mail

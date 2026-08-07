@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { Lock, Eye, EyeOff } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function PasswordInput({ value, onChange, disabled, name = "password" }) {
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="space-y-1.5">
       <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
-        Password
+        {name === "newPassword" || name === "confirmPassword"
+          ? t("auth.newPassword")
+          : t("auth.passwordLabel")}
       </label>
       <div className="relative group">
         <Lock

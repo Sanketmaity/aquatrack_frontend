@@ -5,6 +5,7 @@ import {
   X,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { menuConfig } from "../../config/menuConfig";
 
@@ -13,6 +14,8 @@ export default function MobileDrawer({
   onClose,
   role = "SUPER_ADMIN",
 }) {
+  const { t } = useTranslation();
+
   // ==========================================
   // Navigation
   // ==========================================
@@ -74,7 +77,7 @@ export default function MobileDrawer({
               sm:w-[340px]
               max-w-[85vw]
 
-              bg-white
+              bg-[#FFFFFF]
 
               shadow-2xl
             "
@@ -83,28 +86,28 @@ export default function MobileDrawer({
                 Header
             ====================================== */}
 
-            <div className="border-b border-slate-200 p-5">
+            <div className="border-b border-[#E2E8F0] p-5">
 
               <div className="flex items-start justify-between">
 
                 <div className="flex items-center gap-3">
 
-                  <div className="rounded-xl bg-cyan-100 p-2">
+                  <div className="rounded-xl bg-[#0EA5E9]/10 p-2">
 
                     <Droplets
                       size={24}
-                      className="text-cyan-600"
+                      className="text-[#0EA5E9]"
                     />
 
                   </div>
 
                   <div>
 
-                    <h2 className="text-lg font-bold text-slate-800">
+                    <h2 className="text-lg font-bold text-[#0F172A]">
                       AquaTrack
                     </h2>
 
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-[#475569]">
                       Enterprise Water Management
                     </p>
 
@@ -118,7 +121,7 @@ export default function MobileDrawer({
                     rounded-xl
                     p-2
                     transition
-                    hover:bg-slate-100
+                    hover:bg-[#F8FAFC]
                   "
                 >
                   <X size={20} />
@@ -132,7 +135,7 @@ export default function MobileDrawer({
                 User Card
             ====================================== */}
 
-            <div className="border-b border-slate-200 p-5">
+            <div className="border-b border-[#E2E8F0] p-5">
 
               <div className="flex items-center gap-4">
 
@@ -146,7 +149,7 @@ export default function MobileDrawer({
 
                     rounded-full
 
-                    bg-cyan-600
+                    bg-[#0EA5E9]
 
                     text-sm
                     font-bold
@@ -158,11 +161,11 @@ export default function MobileDrawer({
 
                 <div className="min-w-0">
 
-                  <h4 className="truncate font-semibold text-slate-800">
+                  <h4 className="truncate font-semibold text-[#0F172A]">
                     {currentUser.name}
                   </h4>
 
-                  <p className="text-sm capitalize text-slate-500">
+                  <p className="text-sm capitalize text-[#475569]">
                     {currentUser.role.replaceAll("_", " ").toLowerCase()}
                   </p>
 
@@ -208,8 +211,8 @@ export default function MobileDrawer({
 
                           ${
                             isActive
-                              ? "border-cyan-600 bg-cyan-50 text-cyan-700 shadow-sm"
-                              : "border-transparent text-slate-700 hover:bg-slate-100"
+                              ? "border-[#0EA5E9] bg-[#0EA5E9]/8 text-[#0EA5E9] shadow-sm"
+                              : "border-transparent text-[#475569] hover:bg-[#F8FAFC]"
                           }
                         `}
                       >
@@ -221,7 +224,7 @@ export default function MobileDrawer({
                           />
 
                           <span className="font-medium">
-                            {item.title}
+                            {t(item.title)}
                           </span>
 
                         </div>

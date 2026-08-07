@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export default function DashboardPreview() {
+  const { t } = useTranslation();
+
   return (
     <section
       className="
@@ -9,7 +12,6 @@ export default function DashboardPreview() {
         transition-all duration-300
       "
     >
-      {/* Title */}
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -19,16 +21,15 @@ export default function DashboardPreview() {
           text-gray-900 dark:text-white
         "
       >
-        Live Dashboard Preview
+        {t("landing.previewTitle")}
       </motion.h2>
 
       <p className="
         text-center mt-4 text-gray-600 dark:text-gray-300
       ">
-        Real-time insights into water usage & billing
+        {t("landing.previewSubtitle")}
       </p>
 
-      {/* Dashboard Card */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -42,7 +43,6 @@ export default function DashboardPreview() {
           border border-gray-100 dark:border-gray-800
         "
       >
-        {/* Top Bar */}
         <div className="
           flex items-center justify-between
           px-6 py-4
@@ -59,48 +59,42 @@ export default function DashboardPreview() {
           </p>
         </div>
 
-        {/* Fake Dashboard Content */}
         <div className="p-8 grid md:grid-cols-3 gap-6">
-
-          {/* Card 1 */}
           <div className="
             p-6 rounded-xl
             bg-gray-50 dark:bg-gray-800
           ">
             <h3 className="text-gray-600 dark:text-gray-300">
-              Total Consumption
+              {t("landing.previewCard1Title")}
             </h3>
             <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-2">
               24,500 L
             </p>
           </div>
 
-          {/* Card 2 */}
           <div className="
             p-6 rounded-xl
             bg-gray-50 dark:bg-gray-800
           ">
             <h3 className="text-gray-600 dark:text-gray-300">
-              Active Households
+              {t("landing.previewCard2Title")}
             </h3>
             <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-2">
               128
             </p>
           </div>
 
-          {/* Card 3 */}
           <div className="
             p-6 rounded-xl
             bg-gray-50 dark:bg-gray-800
           ">
             <h3 className="text-gray-600 dark:text-gray-300">
-              Monthly Bill
+              {t("landing.previewCard3Title")}
             </h3>
             <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-2">
               ₹52,000
             </p>
           </div>
-
         </div>
       </motion.div>
     </section>

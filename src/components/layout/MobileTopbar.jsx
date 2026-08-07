@@ -25,9 +25,9 @@ export default function MobileTopbar({ onMenuClick }) {
         h-[68px]
 
         border-b
-        border-slate-200/80
+        border-[#E2E8F0]/80
 
-        bg-white/95
+        bg-[#FFFFFF]/95
         backdrop-blur-xl
 
         px-4
@@ -56,12 +56,12 @@ export default function MobileTopbar({ onMenuClick }) {
 
             rounded-xl
 
-            text-slate-700
+            text-[#475569]
 
             transition-all
             duration-200
 
-            hover:bg-slate-100
+            hover:bg-[#F8FAFC]
             active:scale-95
           "
         >
@@ -83,13 +83,13 @@ export default function MobileTopbar({ onMenuClick }) {
               rounded-xl
 
               bg-gradient-to-br
-              from-blue-600
-              to-cyan-500
+              from-[#0EA5E9]
+              to-[#06B6D4]
 
               text-white
 
               shadow-md
-              shadow-cyan-500/20
+              shadow-[#0EA5E9]/20
             "
           >
             <Droplets size={20} />
@@ -105,7 +105,7 @@ export default function MobileTopbar({ onMenuClick }) {
                 font-bold
                 tracking-tight
 
-                text-slate-900
+                text-[#0F172A]
               "
             >
               AquaTrack
@@ -117,7 +117,7 @@ export default function MobileTopbar({ onMenuClick }) {
 
                 text-[11px]
 
-                text-slate-500
+                text-[#475569]
               "
             >
               Enterprise Water Management

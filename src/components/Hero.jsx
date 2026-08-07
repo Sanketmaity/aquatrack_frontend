@@ -1,6 +1,9 @@
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 export default function Hero() {
+  const { t } = useTranslation();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -35,15 +38,14 @@ export default function Hero() {
         justify-center
         px-6
         bg-gradient-to-b
-        from-sky-50
-        via-white
-        to-sky-100
-        dark:from-slate-950
-        dark:via-slate-900
-        dark:to-black
+        from-[#F8FAFC]
+        via-[#FFFFFF]
+        to-[#F8FAFC]
+        dark:from-[#020617]
+        dark:via-[#0F172A]
+        dark:to-[#020617]
       "
     >
-      {/* Animated Background Gradient */}
       <motion.div
         animate={{
           backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
@@ -56,15 +58,12 @@ export default function Hero() {
         className="absolute inset-0 -z-30 opacity-60"
         style={{
           background:
-            "linear-gradient(120deg,#dbeafe,#ffffff,#e0f2fe,#ffffff,#dbeafe)",
+            "linear-gradient(120deg,#e0f7fe,#ffffff,#e0f2fe,#ffffff,#e0f7fe)",
           backgroundSize: "300% 300%",
         }}
       />
 
-      {/* Apple Mouse Glow */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none z-0"
-      >
+      <motion.div className="absolute inset-0 pointer-events-none z-0">
         <motion.div
           style={{
             x,
@@ -77,14 +76,13 @@ export default function Hero() {
             w-[900px]
             h-[900px]
             rounded-full
-            bg-cyan-300/40
-            dark:bg-cyan-400/20
+            bg-[#06B6D4]/25
+            dark:bg-[#38BDF8]/15
             blur-[220px]
           "
         />
       </motion.div>
 
-      {/* Floating Glow Blob 1 */}
       <motion.div
         animate={{
           y: [0, -35, 0],
@@ -103,13 +101,12 @@ export default function Hero() {
           w-52
           h-52
           rounded-full
-          bg-sky-300/30
+          bg-[#0EA5E9]/20
           blur-3xl
           -z-10
         "
       />
 
-      {/* Floating Glow Blob 2 */}
       <motion.div
         animate={{
           y: [0, 30, 0],
@@ -128,13 +125,12 @@ export default function Hero() {
           w-64
           h-64
           rounded-full
-          bg-cyan-300/25
+          bg-[#06B6D4]/20
           blur-3xl
           -z-10
         "
       />
 
-      {/* Floating Bubble 1 */}
       <motion.div
         animate={{
           y: [0, -250],
@@ -145,10 +141,9 @@ export default function Hero() {
           repeat: Infinity,
           ease: "linear",
         }}
-        className="absolute left-1/4 bottom-0 w-4 h-4 rounded-full bg-sky-300/60"
+        className="absolute left-1/4 bottom-0 w-4 h-4 rounded-full bg-[#0EA5E9]/50"
       />
 
-      {/* Floating Bubble 2 */}
       <motion.div
         animate={{
           y: [0, -300],
@@ -160,10 +155,9 @@ export default function Hero() {
           delay: 2,
           ease: "linear",
         }}
-        className="absolute right-1/3 bottom-0 w-6 h-6 rounded-full bg-cyan-300/50"
+        className="absolute right-1/3 bottom-0 w-6 h-6 rounded-full bg-[#06B6D4]/40"
       />
 
-      {/* Floating Bubble 3 */}
       <motion.div
         animate={{
           y: [0, -220],
@@ -175,59 +169,54 @@ export default function Hero() {
           delay: 4,
           ease: "linear",
         }}
-        className="absolute left-2/3 bottom-0 w-3 h-3 rounded-full bg-blue-300/60"
+        className="absolute left-2/3 bottom-0 w-3 h-3 rounded-full bg-[#0EA5E9]/50"
       />
 
-      {/* Main Content */}
       <div className="relative z-20 text-center max-w-6xl mx-auto">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl md:text-7xl font-extrabold leading-tight text-slate-900 dark:text-white"
+          className="text-5xl md:text-7xl font-extrabold leading-tight text-[#0F172A] dark:text-[#F8FAFC]"
         >
-          Smart Water Management
+          {t("landing.heroTitle")}
           <br />
-          <span className="text-blue-600">for Modern Apartments</span>
+          <span className="text-[#0EA5E9]">{t("landing.heroTitleAccent")}</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.8 }}
-          className="mt-8 text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto"
+          className="mt-8 text-xl text-[#475569] dark:text-[#CBD5E1] max-w-3xl mx-auto"
         >
-          Track water consumption, automate billing, monitor usage,
-          and reduce wastage with real-time analytics.
+          {t("landing.heroSubtitle")}
         </motion.p>
 
-        {/* CTA Tagline */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.8 }}
-        className="mt-10 text-center"
-      >
-        <p className="text-lg md:text-xl font-medium text-slate-700 dark:text-slate-300 mb-6">
-          Book <span className="font-bold text-blue-600">AquaTrack</span> for your property and become the
-          <span className="font-semibold text-blue-600"> Property Admin</span>.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className="mt-10 text-center"
+        >
+          <p className="text-lg md:text-xl font-medium text-[#475569] dark:text-[#CBD5E1] mb-6">
+            {t("landing.heroCta")}
+          </p>
 
-        <div className="flex flex-wrap justify-center gap-5">
-          <Link to="/register-apartment">
-            <button className="px-8 py-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-xl transition-all duration-300 hover:scale-105">
-              Register Your Property
+          <div className="flex flex-wrap justify-center gap-5">
+            <Link to="/register-apartment">
+              <button className="px-8 py-4 rounded-xl bg-[#0EA5E9] hover:bg-[#0284c7] text-white font-semibold shadow-xl shadow-[#0EA5E9]/25 transition-all duration-300 hover:scale-105">
+                {t("landing.registerButton")}
+              </button>
+            </Link>
+
+            <button className="px-8 py-4 rounded-xl border border-[#E2E8F0] dark:border-[#334155] dark:text-[#F8FAFC] hover:bg-[#F8FAFC]/60 dark:hover:bg-[#1E293B] transition-all duration-300 hover:scale-105">
+              {t("landing.learnMore")}
             </button>
-          </Link>
+          </div>
+        </motion.div>
+      </div>
 
-          <button className="px-8 py-4 rounded-xl border border-gray-300 dark:border-gray-700 dark:text-white hover:bg-white/60 dark:hover:bg-gray-800 transition-all duration-300 hover:scale-105">
-            Learn More
-          </button>
-        </div>
-      </motion.div>
-    </div>
-
-      {/* Animated Wave */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
         <motion.svg
           animate={{ x: [0, -40, 0] }}
@@ -243,7 +232,7 @@ export default function Hero() {
         >
           <path
             d="M0,0 C300,110 900,0 1200,90 L1200,120 L0,120 Z"
-            className="fill-sky-200 dark:fill-slate-800"
+            className="fill-[#E0F7FE] dark:fill-[#1E293B]"
           />
         </motion.svg>
       </div>

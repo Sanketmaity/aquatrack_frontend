@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   Building2,
   Eye,
@@ -18,6 +19,8 @@ import {
 } from "../../services/propertyRegistrationService";
 
 export default function AdminRegistrations() {
+  const { t } = useTranslation();
+
   // ==========================================
   // State
   // ==========================================
@@ -52,7 +55,7 @@ export default function AdminRegistrations() {
     } catch (err) {
       console.error(err);
       setError(
-        err.response?.data?.message || "Failed to fetch property registrations."
+        err.response?.data?.message || t("admin.registrations.errors.fetch")
       );
     } finally {
       setLoading(false);
@@ -72,7 +75,7 @@ export default function AdminRegistrations() {
       setIsDetailsModalOpen(true);
     } catch (err) {
       console.error(err);
-      alert("Failed to load registration details.");
+      alert(t("admin.registrations.errors.view"));
     } finally {
       setLoadingId(null);
     }
@@ -108,21 +111,21 @@ export default function AdminRegistrations() {
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-            APPROVED
+            {t("admin.registrations.statuses.approved")}
           </span>
         );
       case "REJECTED":
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200 shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-            REJECTED
+            {t("admin.registrations.statuses.rejected")}
           </span>
         );
       default:
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200 shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-            PENDING
+            {t("admin.registrations.statuses.pending")}
           </span>
         );
     }
@@ -143,16 +146,16 @@ export default function AdminRegistrations() {
             <div className="flex items-center gap-2 mb-1">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-600 border border-blue-500/20">
                 <Sparkles size={13} className="text-blue-500" />
-                Property Onboarding Portal
+                {t("admin.registrations.badge")}
               </span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Property Registration Requests
+              {t("admin.registrations.title")}
             </h1>
 
             <p className="mt-1 text-sm text-slate-500 font-medium">
-              Review, approve, and manage incoming property registration requests.
+              {t("admin.registrations.subtitle")}
             </p>
           </div>
 
@@ -182,7 +185,7 @@ export default function AdminRegistrations() {
 
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-cyan-100">
-                Total Requests
+                {t("admin.registrations.metric")}
               </p>
               <h2 className="text-3xl font-extrabold tracking-tight">
                 {filteredRegistrations.length}
@@ -233,7 +236,7 @@ export default function AdminRegistrations() {
               {filteredRegistrations.length === 0 ? (
                 <div className="py-16 text-center text-slate-400 space-y-2">
                   <Building2 size={36} className="mx-auto text-slate-300 animate-bounce" />
-                  <p className="text-sm font-medium">No registration requests found matching your filter.</p>
+                  <p className="text-sm font-medium">{t("admin.registrations.empty")}</p>
                 </div>
               ) : (
                 <table className="min-w-full text-left border-collapse">

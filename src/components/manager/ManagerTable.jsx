@@ -1,272 +1,420 @@
 import {
-    MoreVertical,
-    Mail,
-    Phone,
-    Building2,
+  MoreVertical,
+  Mail,
+  Phone,
+  Building2,
 } from "lucide-react";
 
 export default function ManagerTable({
 
-    managers = [],
+  managers = [],
 
-    loading = false,
+  loading = false,
 
 }) {
 
-    // ==========================================
-    // Loading
-    // ==========================================
+  // ==========================================
+  // Status Badge
+  // ==========================================
 
-    if (loading) {
+  const statusStyles = {
 
-        return (
+    PENDING:
+      "bg-yellow-100 text-yellow-700 border-yellow-200",
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+    ACTIVATED:
+      "bg-green-100 text-green-700 border-green-200",
 
-                <p className="text-slate-500">
+  };
 
-                    Loading managers...
+  // ==========================================
+  // Loading
+  // ==========================================
 
-                </p>
-
-            </div>
-
-        );
-
-    }
-
-    // ==========================================
-    // Empty State
-    // ==========================================
-
-    if (managers.length === 0) {
-
-        return (
-
-            <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
-
-                <Building2
-                    size={52}
-                    className="mx-auto text-slate-300"
-                />
-
-                <h3 className="mt-5 text-xl font-semibold text-slate-800">
-
-                    No Managers Found
-
-                </h3>
-
-                <p className="mt-2 text-sm text-slate-500">
-
-                    Invite your first manager to manage buildings,
-                    residents and water operations.
-
-                </p>
-
-            </div>
-
-        );
-
-    }
-
-    // ==========================================
-    // UI
-    // ==========================================
+  if (loading) {
 
     return (
 
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
 
-            <table className="min-w-full">
+        <table className="min-w-full">
 
-                <thead className="bg-slate-50">
+          <thead className="bg-slate-50">
 
-                    <tr>
+            <tr>
 
-                        <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600">
+              {[
+                "Manager",
+                "Contact",
+                "Apartment",
+                "Buildings",
+                "Status",
+                "Invited On",
+                "",
+              ].map((heading) => (
 
-                            Manager
+                <th
+                  key={heading}
+                  className="px-6 py-4 text-left"
+                >
 
-                        </th>
+                  <div className="h-4 w-24 rounded bg-slate-200 animate-pulse" />
 
-                        <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600">
+                </th>
 
-                            Contact
+              ))}
 
-                        </th>
+            </tr>
 
-                        <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600">
+          </thead>
 
-                            Apartment
+          <tbody>
 
-                        </th>
+            {[1, 2, 3, 4, 5].map((i) => (
 
-                        <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600">
+              <tr
+                key={i}
+                className="border-t"
+              >
 
-                            Buildings
+                <td
+                  colSpan={7}
+                  className="px-6 py-6"
+                >
 
-                        </th>
+                  <div className="h-6 w-full rounded bg-slate-100 animate-pulse" />
 
-                        <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600">
+                </td>
 
-                            Status
+              </tr>
 
-                        </th>
+            ))}
 
-                        <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600">
+          </tbody>
 
-                            Invited On
+        </table>
 
-                        </th>
+      </div>
 
-                        <th className="px-6 py-4 text-right text-sm font-semibold text-slate-600">
+    );
 
-                            Actions
+  }
 
-                        </th>
+  // ==========================================
+  // Empty State
+  // ==========================================
 
-                    </tr>
+  if (!managers.length) {
 
-                </thead>
+    return (
 
-                <tbody>
+      <div className="rounded-2xl border border-slate-200 bg-white py-16 text-center shadow-sm">
 
-                    {managers.map((manager) => (
+        <Building2
+          size={56}
+          className="mx-auto text-slate-300"
+        />
 
-                        <tr
-                            key={manager.id}
-                            className="border-t hover:bg-slate-50"
-                        >
+        <h3 className="mt-5 text-xl font-bold text-slate-800">
 
-                            {/* Manager */}
+          No Managers Found
 
-                            <td className="px-6 py-5">
+        </h3>
 
-                                <div className="font-semibold text-slate-800">
+        <p className="mt-2 text-sm text-slate-500">
 
-                                    {manager.firstName} {manager.lastName}
+          Invite your first manager to start managing buildings,
+          residents and water operations.
 
-                                </div>
+        </p>
 
-                            </td>
+      </div>
 
-                            {/* Contact */}
+    );
 
-                            <td className="px-6 py-5">
+  }
 
-                                <div className="space-y-2">
+  // ==========================================
+  // UI
+  // ==========================================
 
-                                    <div className="flex items-center gap-2 text-sm text-slate-600">
+  return (
 
-                                        <Mail size={15} />
+    <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
 
-                                        {manager.email}
+      <table className="min-w-full">
 
-                                    </div>
+        <thead className="sticky top-0 bg-slate-50 z-10">
 
-                                    <div className="flex items-center gap-2 text-sm text-slate-600">
+          <tr>
 
-                                        <Phone size={15} />
+            <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600">
 
-                                        {manager.phone}
+              Manager
 
-                                    </div>
+            </th>
 
-                                </div>
+            <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600">
 
-                            </td>
+              Contact
 
-                            {/* Apartment */}
+            </th>
 
-                            <td className="px-6 py-5">
+            <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600">
 
-                                {manager.apartmentName}
+              Apartment
 
-                            </td>
+            </th>
 
-                           {/* Buildings */}
+            <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600">
 
-<td className="px-6 py-5">
+              Buildings
 
-    <div className="flex flex-wrap gap-2">
+            </th>
 
-        {manager.buildings?.map((building) => (
+            <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600">
 
-            <span
-                key={building.id}
-                className="rounded-lg bg-slate-100 px-2 py-1 text-xs font-medium text-slate-700"
+              Status
+
+            </th>
+
+            <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600">
+
+              Invited On
+
+            </th>
+
+            <th className="px-6 py-4 text-right text-sm font-semibold text-slate-600">
+
+              Actions
+
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          {managers.map((manager) => (
+
+            <tr
+              key={manager.id}
+              className="
+                border-t
+                even:bg-slate-50/40
+                hover:bg-blue-50
+                transition-colors
+              "
             >
 
-                {building.buildingName}
+              {/* Manager */}
 
-            </span>
+              <td className="px-6 py-5">
 
-        ))}
+                <div className="flex items-center gap-3">
 
-    </div>
+                  <div
+                    className="
+                      flex
+                      h-10
+                      w-10
+                      items-center
+                      justify-center
+                      rounded-full
+                      bg-blue-100
+                      text-sm
+                      font-bold
+                      text-blue-700
+                    "
+                  >
 
-</td>
+                    {manager.firstName?.charAt(0)}
+                    {manager.lastName?.charAt(0)}
 
-                            {/* Status */}
+                  </div>
 
-                            <td className="px-6 py-5">
+                  <div>
 
-                                {manager.status === "PENDING" && (
+                    <p className="font-semibold text-slate-800">
 
-                                    <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold text-yellow-700">
+                      {manager.firstName} {manager.lastName}
 
-                                        Pending
+                    </p>
 
-                                    </span>
+                  </div>
 
-                                )}
+                </div>
 
-                                {manager.status === "ACTIVATED" && (
+              </td>
 
-                                    <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+              {/* Contact */}
 
-                                        Active
+              <td className="px-6 py-5">
 
-                                    </span>
+                <div className="space-y-2">
 
-                                )}
+                  <div className="flex items-center gap-2 text-sm text-slate-600">
 
-                            </td>
+                    <Mail size={15} />
 
-                            {/* Invited On */}
+                    {manager.email}
 
-                            <td className="px-6 py-5 text-sm text-slate-500">
+                  </div>
 
-                                {manager.createdAt
-                                    ? new Date(manager.createdAt).toLocaleDateString()
-                                    : "-"}
+                  <div className="flex items-center gap-2 text-sm text-slate-600">
 
-                            </td>
+                    <Phone size={15} />
 
-                            {/* Actions */}
+                    {manager.phone}
 
-                            <td className="px-6 py-5 text-right">
+                  </div>
 
-                                <button
-                                    className="rounded-lg p-2 transition hover:bg-slate-100"
-                                >
+                </div>
 
-                                    <MoreVertical size={18} />
+              </td>
 
-                                </button>
+              {/* Apartment */}
 
-                            </td>
+              <td className="px-6 py-5">
 
-                        </tr>
+                {manager.apartmentName}
+
+              </td>
+
+              {/* Buildings */}
+
+              <td className="px-6 py-5">
+
+                {manager.buildings?.length ? (
+
+                  <div className="flex flex-wrap gap-2">
+
+                    {manager.buildings.map((building) => (
+
+                      <span
+                        key={building.id}
+                        className="
+                          rounded-lg
+                          bg-slate-100
+                          px-2.5
+                          py-1
+                          text-xs
+                          font-medium
+                          text-slate-700
+                        "
+                      >
+
+                        {building.buildingName}
+
+                      </span>
 
                     ))}
 
-                </tbody>
+                  </div>
 
-            </table>
+                ) : (
 
-        </div>
+                  <span className="text-sm text-slate-400">
 
-    );
+                    No Buildings
+
+                  </span>
+
+                )}
+
+              </td>
+
+              {/* Status */}
+
+              <td className="px-6 py-5">
+
+                <span
+                  className={`
+                    rounded-full
+                    border
+                    px-3
+                    py-1
+                    text-xs
+                    font-semibold
+                    ${statusStyles[manager.status]}
+                  `}
+                >
+
+                  {manager.status}
+
+                </span>
+
+              </td>
+
+              {/* Date */}
+
+              <td className="px-6 py-5 text-sm text-slate-500">
+
+                {manager.createdAt
+                  ? new Date(manager.createdAt).toLocaleDateString()
+                  : "-"}
+
+              </td>
+
+              {/* Actions */}
+
+              <td className="px-6 py-5 text-right">
+
+                <button
+                  title="More Actions"
+                  className="
+                    rounded-lg
+                    p-2
+                    transition
+                    hover:bg-slate-100
+                  "
+                >
+
+                  <MoreVertical size={18} />
+
+                </button>
+
+              </td>
+
+            </tr>
+
+          ))}
+
+        </tbody>
+
+      </table>
+
+      {/* Footer */}
+
+      <div
+        className="
+          flex
+          items-center
+          justify-between
+          border-t
+          bg-slate-50
+          px-6
+          py-3
+          text-sm
+          text-slate-500
+        "
+      >
+
+        Showing
+
+        <span className="mx-1 font-semibold">
+
+          {managers.length}
+
+        </span>
+
+        managers
+
+      </div>
+
+    </div>
+
+  );
 
 }

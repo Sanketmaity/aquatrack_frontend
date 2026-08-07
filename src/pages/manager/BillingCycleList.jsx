@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
     createBillingCycle,
@@ -27,6 +28,7 @@ import {
 } from "../../services/billingCycleService";
 
 export default function BillingCycleList() {
+    const { t } = useTranslation();
 
     // ==========================================
     // State
@@ -180,7 +182,7 @@ export default function BillingCycleList() {
 
         if (!buildingId) {
 
-            alert("Please select a building first.");
+            alert(t("manager.billingCycles.alerts.selectBuilding"));
 
             return;
 
@@ -210,13 +212,13 @@ export default function BillingCycleList() {
 
             await loadBillingCycles(buildingId);
 
-            alert("Billing cycle created successfully.");
+            alert(t("manager.billingCycles.alerts.created"));
 
         } catch (error) {
 
             console.error("Create Billing Cycle Error:", error);
 
-            alert("Failed to create billing cycle.");
+            alert(t("manager.billingCycles.alerts.createFailed"));
 
         }
 
@@ -274,7 +276,7 @@ export default function BillingCycleList() {
 
             console.error("Update Billing Cycle Error:", error);
 
-            alert("Failed to update billing cycle.");
+            alert(t("manager.billingCycles.alerts.updateFailed"));
 
         }
 
@@ -310,7 +312,7 @@ export default function BillingCycleList() {
 
             console.error("Close Billing Cycle Error:", error);
 
-            alert("Failed to close billing cycle.");
+            alert(t("manager.billingCycles.alerts.closeFailed"));
 
         }
 
@@ -357,7 +359,7 @@ export default function BillingCycleList() {
                 error
             );
 
-            alert("Failed to delete billing cycle.");
+            alert(t("manager.billingCycles.alerts.deleteFailed"));
 
         }
 

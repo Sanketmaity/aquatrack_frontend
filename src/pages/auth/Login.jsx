@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import logo from "../../assets/logo.png";
 import AnimatedBackground from "../../components/AnimatedBackground";
@@ -14,6 +15,7 @@ import { login } from "../../services/authService";
 
 export default function Login() {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     // ==========================
     // State
@@ -142,10 +144,10 @@ export default function Login() {
                         {/* Heading */}
                         <div className="text-center mb-8">
                             <h1 className="text-3xl font-extrabold text-white tracking-tight">
-                                Welcome Back
+                                {t("auth.welcomeBack")}
                             </h1>
                             <p className="mt-2.5 text-sm text-slate-400 leading-relaxed max-w-xs mx-auto">
-                                Sign in to access your secure AquaTrack portal and manage water systems effortlessly.
+                                {t("auth.welcomeSubtitle")}
                             </p>
                         </div>
 
@@ -192,7 +194,7 @@ export default function Login() {
                                         className="h-4 w-4 rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-cyan-500 focus:ring-offset-slate-900 transition cursor-pointer"
                                     />
                                     <span className="group-hover:text-white transition-colors">
-                                        Remember Me
+                                        {t("auth.rememberMe")}
                                     </span>
                                 </label>
 
@@ -200,7 +202,7 @@ export default function Login() {
                                     to="/forgot-password"
                                     className="text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition-colors hover:underline"
                                 >
-                                    Forgot Password?
+                                    {t("auth.forgotPassword")}
                                 </Link>
                             </motion.div>
 
@@ -213,7 +215,7 @@ export default function Login() {
                             >
                                 <LoadingButton
                                     loading={loading}
-                                    text="Login to Dashboard"
+                                    text={t("auth.loginButton")}
                                 />
                             </motion.div>
 
@@ -222,10 +224,10 @@ export default function Login() {
                                 <div className="flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-400">
                                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                                     <ShieldCheck size={13} className="text-emerald-400" />
-                                    <span>256-Bit Encrypted Portal</span>
+                                    <span>{t("common.securityBadge")}</span>
                                 </div>
                                 <p className="text-[11px] text-slate-500 mt-1">
-                                    © {new Date().getFullYear()} AquaTrack • All Rights Reserved
+                                    © {new Date().getFullYear()} AquaTrack • {t("common.rightsReserved")}
                                 </p>
                             </div>
                         </form>

@@ -1,9 +1,12 @@
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { menuConfig } from "../../config/menuConfig";
 
 export default function MobileBottomNav({
   role = "SUPER_ADMIN",
 }) {
+  const { t } = useTranslation();
+
   // ==========================================
   // User
   // ==========================================
@@ -41,9 +44,9 @@ export default function MobileBottomNav({
         z-50
 
         border-t
-        border-slate-200/80
+        border-[#E2E8F0]/80
 
-        bg-white/95
+        bg-[#FFFFFF]/95
         backdrop-blur-xl
 
         shadow-[0_-10px_30px_rgba(15,23,42,0.08)]
@@ -78,14 +81,14 @@ export default function MobileBottomNav({
 
                     ${
                       isActive
-                        ? "bg-cyan-50 text-cyan-600"
-                        : "text-slate-500 hover:text-cyan-600"
+                        ? "bg-[#0EA5E9]/8 text-[#0EA5E9]"
+                        : "text-[#475569] hover:text-[#0EA5E9]"
                     }
                   `}
                 >
                   {/* Profile */}
 
-                  {item.title === "Profile" ? (
+                  {item.title === "menu.profile" || item.title === "Profile" ? (
 
                     <div
                       className={`
@@ -104,8 +107,8 @@ export default function MobileBottomNav({
 
                         ${
                           isActive
-                            ? "bg-cyan-600 text-white"
-                            : "bg-slate-200 text-slate-700"
+                            ? "bg-[#0EA5E9] text-white"
+                            : "bg-[#F8FAFC] text-[#475569]"
                         }
                       `}
                     >
@@ -132,12 +135,12 @@ export default function MobileBottomNav({
 
                       ${
                         isActive
-                          ? "text-cyan-600"
-                          : "text-slate-500"
+                          ? "text-[#0EA5E9]"
+                          : "text-[#475569]"
                       }
                     `}
                   >
-                    {item.title}
+                    {t(item.title)}
                   </span>
 
                 </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ShieldCheck, ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { resetPassword } from "../../services/authService";
 import logo from "../../assets/logo.png";
@@ -12,6 +13,7 @@ import LoadingButton from "../../components/LoadingButton";
 
 export default function ResetPassword() {
     const navigate = useNavigate();
+    const { t } = useTranslation();
     const [searchParams] = useSearchParams();
     const token = searchParams.get("token");
 
@@ -120,10 +122,10 @@ export default function ResetPassword() {
                         {/* Heading */}
                         <div className="text-center mb-8">
                             <h1 className="text-3xl font-extrabold text-white tracking-tight">
-                                Reset Password
+                                {t("auth.resetTitle")}
                             </h1>
                             <p className="mt-2.5 text-sm text-slate-400 leading-relaxed max-w-xs mx-auto">
-                                Create a new secure password for your AquaTrack account.
+                                {t("auth.resetSubtitle")}
                             </p>
                         </div>
 
@@ -166,7 +168,7 @@ export default function ResetPassword() {
                             >
                                 <LoadingButton
                                     loading={loading}
-                                    text="Reset Password"
+                                    text={t("auth.resetButton")}
                                 />
                             </motion.div>
 
@@ -195,7 +197,7 @@ export default function ResetPassword() {
                                         size={16} 
                                         className="transition-transform duration-300 group-hover:-translate-x-1" 
                                     />
-                                    <span>Back to Login</span>
+                                    <span>{t("auth.backToLogin")}</span>
                                 </Link>
                             </motion.div>
 
@@ -204,10 +206,10 @@ export default function ResetPassword() {
                                 <div className="flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-400">
                                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                                     <ShieldCheck size={13} className="text-emerald-400" />
-                                    <span>256-Bit Encrypted Portal</span>
+                                    <span>{t("common.securityBadge")}</span>
                                 </div>
                                 <p className="text-[11px] text-slate-500 mt-1">
-                                    © {new Date().getFullYear()} AquaTrack • All Rights Reserved
+                                    © {new Date().getFullYear()} AquaTrack • {t("common.rightsReserved")}
                                 </p>
                             </div>
                         </form>

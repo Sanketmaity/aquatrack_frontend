@@ -1,6 +1,9 @@
 import { ArrowRight, Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function LoadingButton({ loading, text = "Submit" }) {
+  const { t } = useTranslation();
+
   return (
     <button
       type="submit"
@@ -37,7 +40,7 @@ export default function LoadingButton({ loading, text = "Submit" }) {
       {loading ? (
         <>
           <Loader2 size={18} className="animate-spin text-white" />
-          <span>Signing in...</span>
+          <span>{t("auth.loggingIn")}</span>
         </>
       ) : (
         <>

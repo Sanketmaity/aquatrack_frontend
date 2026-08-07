@@ -1,9 +1,12 @@
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import ProfileDropdown from "./ProfileDropdown";
 
 export default function Topbar() {
+  const { t } = useTranslation();
+
   // ==========================================
   // Temporary User
   // (Replace with Auth Later)
@@ -37,9 +40,9 @@ export default function Topbar() {
         h-20
 
         border-b
-        border-slate-200/70
+        border-[#E2E8F0]/70
 
-        bg-white/85
+        bg-[#FFFFFF]/85
         backdrop-blur-xl
 
         px-8
@@ -55,8 +58,8 @@ export default function Topbar() {
 
         <div className="flex items-center gap-2">
 
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-            Dashboard
+          <h1 className="text-3xl font-bold tracking-tight text-[#0F172A]">
+            {t("dashboard.title")}
           </h1>
 
           <Sparkles
@@ -66,11 +69,11 @@ export default function Topbar() {
 
         </div>
 
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-[#475569]">
 
-          Welcome back,
+          {t("dashboard.welcome")}
 
-          <span className="ml-1 font-semibold capitalize text-slate-700">
+          <span className="ml-1 font-semibold capitalize text-[#0F172A]">
             {userName}
           </span>
 

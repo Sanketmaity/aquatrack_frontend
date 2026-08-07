@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ShieldCheck, ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { forgotPassword } from "../../services/authService";
 import logo from "../../assets/logo.png";
@@ -11,6 +12,7 @@ import EmailInput from "../../components/EmailInput";
 import LoadingButton from "../../components/LoadingButton";
 
 export default function ForgotPassword() {
+    const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -107,10 +109,10 @@ export default function ForgotPassword() {
                         {/* Heading */}
                         <div className="text-center mb-8">
                             <h1 className="text-3xl font-extrabold text-white tracking-tight">
-                                Forgot Password?
+                                {t("auth.forgotTitle")}
                             </h1>
                             <p className="mt-2.5 text-sm text-slate-400 leading-relaxed max-w-xs mx-auto">
-                                Enter your registered email address and we'll send you a secure password reset link.
+                                {t("auth.forgotSubtitle")}
                             </p>
                         </div>
 
@@ -138,7 +140,7 @@ export default function ForgotPassword() {
                             >
                                 <LoadingButton
                                     loading={loading}
-                                    text="Send Reset Link"
+                                    text={t("auth.sendResetLink")}
                                 />
                             </motion.div>
 
@@ -167,7 +169,7 @@ export default function ForgotPassword() {
                                         size={16} 
                                         className="transition-transform duration-300 group-hover:-translate-x-1" 
                                     />
-                                    <span>Back to Login</span>
+                                    <span>{t("auth.backToLogin")}</span>
                                 </Link>
                             </motion.div>
 
@@ -176,10 +178,10 @@ export default function ForgotPassword() {
                                 <div className="flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-400">
                                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                                     <ShieldCheck size={13} className="text-emerald-400" />
-                                    <span>256-Bit Encrypted Portal</span>
+                                    <span>{t("common.securityBadge")}</span>
                                 </div>
                                 <p className="text-[11px] text-slate-500 mt-1">
-                                    © {new Date().getFullYear()} AquaTrack • All Rights Reserved
+                                    © {new Date().getFullYear()} AquaTrack • {t("common.rightsReserved")}
                                 </p>
                             </div>
                         </form>

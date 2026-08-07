@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Building,
   User,
@@ -19,6 +20,7 @@ import { registerProperty } from "../services/propertyRegistrationService";
 import AnimatedBackground from "../components/AnimatedBackground";
 
 export default function RegisterApartment() {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     companyName: "",
@@ -110,7 +112,7 @@ export default function RegisterApartment() {
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors group"
           >
             <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
-            <span>Back to Home</span>
+            <span>{t("common.backToHome")}</span>
           </Link>
         </div>
 
@@ -122,15 +124,15 @@ export default function RegisterApartment() {
 
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-xs font-semibold mb-2">
             <Sparkles size={13} />
-            <span>Onboard Your Property</span>
+            <span>{t("register.badge")}</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Register Your Apartment
+            {t("register.title")}
           </h1>
 
           <p className="mt-2 text-sm text-slate-400 max-w-md mx-auto">
-            Start managing water consumption, billing cycles, and resident telemetry with AquaTrack.
+            {t("register.subtitle")}
           </p>
         </div>
 
@@ -141,7 +143,7 @@ export default function RegisterApartment() {
           <div className="grid sm:grid-cols-2 gap-4">
             <FormInput
               icon={<Building size={18} />}
-              label="Company Name"
+              label={t("register.companyName")}
               name="companyName"
               placeholder="e.g. Skyline Residency"
               value={formData.companyName}
@@ -152,7 +154,7 @@ export default function RegisterApartment() {
 
             <FormInput
               icon={<User size={18} />}
-              label="Contact Person Name"
+              label={t("register.contactPerson")}
               name="contactPersonName"
               placeholder="e.g. Alex Mercer"
               value={formData.contactPersonName}
@@ -166,7 +168,7 @@ export default function RegisterApartment() {
           <div className="grid sm:grid-cols-2 gap-4">
             <FormInput
               icon={<Mail size={18} />}
-              label="Official Email"
+              label={t("register.officialEmail")}
               type="email"
               name="email"
               placeholder="admin@skyline.com"
@@ -178,7 +180,7 @@ export default function RegisterApartment() {
 
             <FormInput
               icon={<Phone size={18} />}
-              label="Phone Number"
+              label={t("register.phoneNumber")}
               type="tel"
               name="phone"
               placeholder="+91 98765 43210"
@@ -193,7 +195,7 @@ export default function RegisterApartment() {
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
-                Property Type
+                {t("register.propertyType")}
               </label>
               <div className="relative group">
                 <Building2
@@ -227,16 +229,16 @@ export default function RegisterApartment() {
                     cursor-pointer
                   "
                 >
-                  <option value="APARTMENT" className="bg-slate-900 text-white">Apartment</option>
-                  <option value="VILLA" className="bg-slate-900 text-white">Villa</option>
-                  <option value="GATED_COMMUNITY" className="bg-slate-900 text-white">Gated Community</option>
+                  <option value="APARTMENT" className="bg-slate-900 text-white">{t("register.apartment")}</option>
+                  <option value="VILLA" className="bg-slate-900 text-white">{t("register.villa")}</option>
+                  <option value="GATED_COMMUNITY" className="bg-slate-900 text-white">{t("register.gatedCommunity")}</option>
                 </select>
               </div>
             </div>
 
             <FormInput
               icon={<Building2 size={18} />}
-              label="Number of Apartments"
+              label={t("register.numberOfApartments")}
               type="number"
               min="1"
               step="1"
@@ -252,7 +254,7 @@ export default function RegisterApartment() {
           {/* Complete Address */}
           <div className="space-y-1.5">
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
-              Complete Address
+              {t("register.address")}
             </label>
             <div className="relative group">
               <MapPin
@@ -297,7 +299,7 @@ export default function RegisterApartment() {
           <div className="grid sm:grid-cols-3 gap-4">
             <FormInput
               icon={<MapPin size={18} />}
-              label="City"
+              label={t("register.city")}
               name="city"
               placeholder="e.g. Mumbai"
               value={formData.city}
@@ -308,7 +310,7 @@ export default function RegisterApartment() {
 
             <FormInput
               icon={<MapPin size={18} />}
-              label="State"
+              label={t("register.state")}
               name="state"
               placeholder="e.g. Maharashtra"
               value={formData.state}
@@ -319,7 +321,7 @@ export default function RegisterApartment() {
 
             <FormInput
               icon={<MapPin size={18} />}
-              label="Pincode"
+              label={t("register.pincode")}
               name="pincode"
               placeholder="400001"
               value={formData.pincode}
@@ -367,11 +369,11 @@ export default function RegisterApartment() {
               {loading ? (
                 <>
                   <Loader2 size={18} className="animate-spin text-white" />
-                  <span>Submitting Registration...</span>
+                  <span>{t("register.submitting")}</span>
                 </>
               ) : (
                 <>
-                  <span>Register Apartment</span>
+                  <span>{t("register.submit")}</span>
                   <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </>
               )}
@@ -379,7 +381,7 @@ export default function RegisterApartment() {
           </div>
 
           <p className="text-center text-[11px] text-slate-500 pt-2">
-            By registering, you agree to AquaTrack's Smart Water Management Policies.
+            {t("register.disclaimer")}
           </p>
 
         </form>

@@ -249,31 +249,31 @@ export const menuConfig = {
     sidebar: [
 
       {
-        title: "Dashboard",
+        title: "menu.dashboard",
         icon: LayoutDashboard,
         path: "/admin/dashboard",
       },
 
       {
-        title: "Property Registrations",
+        title: "menu.propertyRegistrations",
         icon: Building2,
         path: "/admin/registrations",
       },
 
       {
-        title: "Property Admins",
+        title: "menu.propertyAdmins",
         icon: Users,
         path: "/admin/property-admins",
       },
 
       {
-        title: "Profile",
+        title: "menu.profile",
         icon: UserCircle2,
         path: "/admin/profile",
       },
 
       {
-        title: "Logout",
+        title: "menu.logout",
         icon: LogOut,
         path: "/logout",
       },
@@ -287,25 +287,25 @@ export const menuConfig = {
     bottomNav: [
 
       {
-        title: "Dashboard",
+        title: "menu.dashboard",
         icon: LayoutDashboard,
         path: "/admin/dashboard",
       },
 
       {
-        title: "Registrations",
+        title: "menu.registrations",
         icon: Building2,
         path: "/admin/registrations",
       },
 
       {
-        title: "Admins",
+        title: "menu.admins",
         icon: Users,
         path: "/admin/property-admins",
       },
 
       {
-        title: "Profile",
+        title: "menu.profile",
         icon: UserCircle2,
         path: "/admin/profile",
       },
@@ -319,31 +319,31 @@ export const menuConfig = {
     drawer: [
 
       {
-        title: "Dashboard",
+        title: "menu.dashboard",
         icon: LayoutDashboard,
         path: "/admin/dashboard",
       },
 
       {
-        title: "Property Registrations",
+        title: "menu.propertyRegistrations",
         icon: Building2,
         path: "/admin/registrations",
       },
 
       {
-        title: "Property Admins",
+        title: "menu.propertyAdmins",
         icon: Users,
         path: "/admin/property-admins",
       },
 
       {
-        title: "Settings",
+        title: "menu.settings",
         icon: Settings,
         path: "/admin/settings",
       },
 
       {
-        title: "Logout",
+        title: "menu.logout",
         icon: LogOut,
         path: "/logout",
       },
@@ -365,37 +365,37 @@ export const menuConfig = {
     sidebar: [
 
       {
-        title: "Dashboard",
+        title: "menu.dashboard",
         icon: LayoutDashboard,
         path: "/property/dashboard",
       },
 
       {
-        title: "Apartments",
+        title: "menu.apartments",
         icon: Building2,
         path: "/property/apartments",
       },
 
       {
-        title: "Buildings",
+        title: "menu.buildings",
         icon: Building,
         path: "/property/buildings",
       },
 
       {
-        title: "Floors",
+        title: "menu.floors",
         icon: Layers3,
         path: "/property/floors",
       },
 
       {
-        title: "Managers",
+        title: "menu.managers",
         icon: UserCog,
         path: "/property/managers",
       },
 
       {
-        title: "Profile",
+        title: "menu.profile",
         icon: UserCircle2,
         path: "/property/profile",
       },
@@ -409,25 +409,25 @@ export const menuConfig = {
     bottomNav: [
 
       {
-        title: "Dashboard",
+        title: "menu.dashboard",
         icon: LayoutDashboard,
         path: "/property/dashboard",
       },
 
       {
-        title: "Apartments",
+        title: "menu.apartments",
         icon: Building2,
         path: "/property/apartments",
       },
 
       {
-        title: "Managers",
+        title: "menu.managers",
         icon: UserCog,
         path: "/property/managers",
       },
 
       {
-        title: "Profile",
+        title: "menu.profile",
         icon: UserCircle2,
         path: "/property/profile",
       },
@@ -441,19 +441,19 @@ export const menuConfig = {
     drawer: [
 
       {
-        title: "Dashboard",
+        title: "menu.dashboard",
         icon: LayoutDashboard,
         path: "/property/dashboard",
       },
 
       {
-        title: "Buildings",
+        title: "menu.buildings",
         icon: Building,
         path: "/property/buildings",
       },
 
       {
-        title: "Floors",
+        title: "menu.floors",
         icon: Layers3,
         path: "/property/floors",
       },
@@ -475,61 +475,61 @@ export const menuConfig = {
     sidebar: [
 
       {
-        title: "Dashboard",
+        title: "menu.dashboard",
         icon: LayoutDashboard,
         path: "/manager/dashboard",
       },
 
       {
-        title: "Households",
+        title: "menu.households",
         icon: Home,
         path: "/manager/households",
       },
 
       {
-        title: "Residents",
+        title: "menu.residents",
         icon: Users,
         path: "/manager/residents",
       },
 
       {
-        title: "Billing Cycles",
+        title: "menu.billingCycles",
         icon: CalendarDays,
         path: "/manager/billing-cycles",
       },
 
       {
-        title: "Water Usage",
+        title: "menu.waterUsage",
         icon: Droplets,
         path: "/manager/water-usage",
       },
 
       {
-        title: "Bulk Water Purchases",
+        title: "menu.bulkWaterPurchases",
         icon: Wallet,
         path: "/manager/bulk-water-purchases",
       },
 
       {
-        title: "Consumption Distribution",
+        title: "menu.consumptionDistribution",
         icon: ArrowLeftRight,
         path: "/manager/consumption-distribution",
       },
 
       {
-        title: "Water Bills",
+        title: "menu.waterBills",
         icon: ReceiptIndianRupee,
         path: "/manager/water-bills",
       },
 
       {
-        title: "Payments",
+        title: "menu.payments",
         icon: PiPaypalLogo,
         path: "/manager/payments",
       },
 
       {
-        title: "Profile",
+        title: "menu.profile",
         icon: UserCircle2,
         path: "/manager/profile",
       },
@@ -542,25 +542,25 @@ export const menuConfig = {
     bottomNav: [
 
       {
-        title: "Dashboard",
+        title: "menu.dashboard",
         icon: LayoutDashboard,
         path: "/manager/dashboard",
       },
 
       {
-        title: "Households",
+        title: "menu.households",
         icon: Home,
         path: "/manager/households",
       },
 
       {
-        title: "Residents",
+        title: "menu.residents",
         icon: Users,
         path: "/manager/residents",
       },
 
       {
-        title: "Profile",
+        title: "menu.profile",
         icon: UserCircle2,
         path: "/manager/profile",
       },
@@ -574,37 +574,37 @@ export const menuConfig = {
     drawer: [
 
       {
-        title: "Billing Cycles",
+        title: "menu.billingCycles",
         icon: CalendarDays,
         path: "/manager/billing-cycles",
       },
 
       {
-        title: "Water Usage",
+        title: "menu.waterUsage",
         icon: Droplets,
         path: "/manager/water-usage",
       },
 
       {
-        title: "Bulk Water Purchases",
+        title: "menu.bulkWaterPurchases",
         icon: Wallet,
         path: "/manager/bulk-water-purchases",
       },
 
       {
-        title: "Consumption Distribution",
+        title: "menu.consumptionDistribution",
         icon: ArrowLeftRight,
         path: "/manager/consumption-distribution",
       },
 
       {
-        title: "Water Bills",
+        title: "menu.waterBills",
         icon: ReceiptIndianRupee,
         path: "/manager/water-bills",
       },
 
       {
-        title: "Payments",
+        title: "menu.payments",
         icon: PiPaypalLogo,
         path: "/manager/payments",
       },
@@ -626,31 +626,31 @@ export const menuConfig = {
     sidebar: [
 
       {
-        title: "Dashboard",
+        title: "menu.dashboard",
         icon: LayoutDashboard,
         path: "/resident/dashboard",
       },
 
       {
-        title: "My Household",
+        title: "menu.myHousehold",
         icon: Home,
         path: "/resident/my-household",
       },
 
       {
-        title: "My Water Usage",
+        title: "menu.myWaterUsage",
         icon: Droplets,
         path: "/resident/water-usage",
       },
 
       {
-        title: "My Water Bills",
+        title: "menu.myWaterBills",
         icon: ReceiptIndianRupee,
         path: "/resident/water-bills",
       },
 
       {
-        title: "My Payments",
+        title: "menu.myPayments",
         icon: GiPayMoney,
         path: "/resident/my-payments",
       },
@@ -664,25 +664,25 @@ export const menuConfig = {
     bottomNav: [
 
       {
-        title: "Dashboard",
+        title: "menu.dashboard",
         icon: LayoutDashboard,
         path: "/resident/dashboard",
       },
 
       {
-        title: "Usage",
+        title: "menu.usage",
         icon: Droplets,
         path: "/resident/water-usage",
       },
 
       {
-        title: "Payments",
+        title: "menu.payments",
         icon: GiPayMoney,
         path: "/resident/my-payments",
       },
 
       {
-        title: "Profile",
+        title: "menu.profile",
         icon: UserCircle2,
         path: "/resident/profile",
       },
@@ -696,25 +696,25 @@ export const menuConfig = {
     drawer: [
 
       {
-        title: "My Household",
+        title: "menu.myHousehold",
         icon: Home,
         path: "/resident/my-household",
       },
 
       {
-        title: "My Water Bills",
+        title: "menu.myWaterBills",
         icon: ReceiptIndianRupee,
         path: "/resident/water-bills",
       },
 
       {
-        title: "Settings",
+        title: "menu.settings",
         icon: Settings,
         path: "/resident/settings",
       },
 
       {
-        title: "Help & Support",
+        title: "menu.helpSupport",
         icon: Users,
         path: "/resident/support",
       },

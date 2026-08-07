@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   Search,
   RefreshCw,
@@ -19,6 +20,8 @@ import {
 import PropertyAdminDetailsModal from "../../components/admin/PropertyAdminDetailsModal";
 
 export default function PropertyAdmins() {
+  const { t } = useTranslation();
+
   // ==========================================
   // State
   // ==========================================
@@ -51,7 +54,7 @@ export default function PropertyAdmins() {
     } catch (err) {
       console.error(err);
       setError(
-        err.response?.data?.message || "Failed to load property admins."
+        err.response?.data?.message || t("admin.propertyAdmins.errors.fetch")
       );
     } finally {
       setLoading(false);
@@ -69,7 +72,7 @@ export default function PropertyAdmins() {
       setIsModalOpen(true);
     } catch (err) {
       console.error(err);
-      alert("Failed to load property admin details.");
+      alert(t("admin.propertyAdmins.errors.view"));
     } finally {
       setLoadingId(null);
     }
@@ -112,15 +115,15 @@ export default function PropertyAdmins() {
             <div className="flex items-center gap-2 mb-1">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-600 border border-blue-500/20">
                 <Sparkles size={13} className="text-blue-500" />
-                Administrative Access Control
+                {t("admin.propertyAdmins.badge")}
               </span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Property Admins
+              {t("admin.propertyAdmins.title")}
             </h1>
             <p className="mt-1 text-sm text-slate-500 font-medium">
-              Manage and review all registered property administrators.
+              {t("admin.propertyAdmins.subtitle")}
             </p>
           </div>
 
@@ -150,7 +153,7 @@ export default function PropertyAdmins() {
 
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-cyan-100">
-                Total Admins
+                {t("admin.propertyAdmins.metric")}
               </p>
               <h2 className="text-3xl font-extrabold tracking-tight">
                 {admins.length}
@@ -197,7 +200,7 @@ export default function PropertyAdmins() {
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search by first name, last name, or email..."
+                placeholder={t("admin.propertyAdmins.searchPlaceholder")}
                 className="
                   w-full
                   rounded-2xl

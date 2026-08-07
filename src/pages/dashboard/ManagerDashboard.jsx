@@ -1,25 +1,62 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { RefreshCw, AlertCircle, Sparkles } from "lucide-react";
+import {
+  RefreshCw,
+  AlertCircle,
+  Sparkles,
+} from "lucide-react";
 
 import DashboardLayout from "../../components/ui/DashboardLayout";
+
 import DashboardSummaryCards from "../../components/manager/DashboardSummaryCards";
 import DashboardCharts from "../../components/manager/DashboardCharts";
+import DashboardAlerts from "../../components/manager/DashboardAlerts";
 import DashboardQuickActions from "../../components/manager/DashboardQuickActions";
 
-import { getManagerDashboard } from "../../services/managerDashboardService";
+import TopConsumersTable from "../../components/manager/tables/TopConsumersTable";
+import RecentBillsTable from "../../components/manager/tables/RecentBillsTable";
+import RecentPaymentsTable from "../../components/manager/tables/RecentPaymentsTable";
+
+import {
+  getDashboardSummary,
+  getMonthlyWaterConsumption,
+  getBuildingUsage,
+  getPaymentStatus,
+  getBillStatus,
+  getRevenueTrend,
+  getTopConsumers,
+  getRecentBills,
+  getRecentPayments,
+  getDashboardAlerts,
+} from "../../services/managerDashboardService";
 
 export default function ManagerDashboard() {
+
   // ==========================================
   // State
   // ==========================================
-  const [summary, setSummary] = useState(null);
+
+  const [dashboard, setDashboard] = useState({
+    summary: null,
+    monthlyConsumption: [],
+    buildingUsage: [],
+    paymentStatus: null,
+    billStatus: null,
+    revenueTrend: [],
+    topConsumers: [],
+    recentBills: [],
+    recentPayments: [],
+    alerts: [],
+  });
+
   const [loading, setLoading] = useState(true);
+
   const [error, setError] = useState("");
 
   // ==========================================
   // Initial Load
   // ==========================================
+
   useEffect(() => {
     loadDashboard();
   }, []);
@@ -27,176 +64,279 @@ export default function ManagerDashboard() {
   // ==========================================
   // Load Dashboard
   // ==========================================
+
   async function loadDashboard() {
+
     try {
+
       setLoading(true);
+
       setError("");
 
-      const response = await getManagerDashboard();
+      const [
 
-      console.log("Manager Dashboard Summary:", response);
-      setSummary(response);
+        summary,
+
+        monthlyConsumption,
+
+        buildingUsage,
+
+        paymentStatus,
+
+        billStatus,
+
+        revenueTrend,
+
+        topConsumers,
+
+        recentBills,
+
+        recentPayments,
+
+        alerts,
+
+      ] = await Promise.all([
+
+        getDashboardSummary(),
+
+        getMonthlyWaterConsumption(),
+
+        getBuildingUsage(),
+
+        getPaymentStatus(),
+
+        getBillStatus(),
+
+        getRevenueTrend(),
+
+        getTopConsumers(),
+
+        getRecentBills(),
+
+        getRecentPayments(),
+
+        getDashboardAlerts(),
+
+      ]);
+
+      setDashboard({
+
+        summary: summary.data,
+
+        monthlyConsumption: monthlyConsumption.data,
+
+        buildingUsage: buildingUsage.data,
+
+        paymentStatus: paymentStatus.data,
+
+        billStatus: billStatus.data,
+
+        revenueTrend: revenueTrend.data,
+
+        topConsumers: topConsumers.data,
+
+        recentBills: recentBills.data,
+
+        recentPayments: recentPayments.data,
+
+        alerts: alerts.data,
+
+      });
+
     } catch (err) {
+
       console.error(err);
+
       setError(
-        err.response?.data?.message || "Failed to load dashboard data."
+
+        err.response?.data?.message ||
+
+        "Failed to load dashboard."
+
       );
+
     } finally {
+
       setLoading(false);
+
     }
+
   }
 
   // ==========================================
   // UI
   // ==========================================
+
   return (
+
     <DashboardLayout>
-      <div className="space-y-8 max-w-7xl mx-auto">
-        
-        {/* ======================================
-            Page Header with Refresh Action
-        ====================================== */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-200/80">
+
+      <div className="mx-auto max-w-7xl space-y-8">
+
+        {/* ========================================== */}
+        {/* Header */}
+        {/* ========================================== */}
+
+        <div className="flex flex-col gap-4 border-b border-slate-200 pb-4 lg:flex-row lg:items-center lg:justify-between">
+
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-600 border border-blue-500/20">
-                <Sparkles size={13} className="text-blue-500" />
-                Building Operations Hub
-              </span>
-              <span className="flex items-center gap-1 text-[11px] font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                Live Monitoring Active
-              </span>
+
+            <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
+
+              <Sparkles size={14} />
+
+              Building Operations Hub
+
             </div>
 
-            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-3xl font-bold text-slate-900">
+
               Manager Dashboard
+
             </h1>
-            <p className="mt-1 text-sm text-slate-500">
-              Welcome back! Monitor your assigned households and residents from one place.
+
+            <p className="mt-1 text-slate-500">
+
+              Monitor buildings, residents, bills and water consumption
+              from one centralized dashboard.
+
             </p>
+
           </div>
 
-          {/* Refresh Button */}
           <button
             onClick={loadDashboard}
             disabled={loading}
             className="
               inline-flex
               items-center
-              justify-center
               gap-2
-              px-4
-              py-2.5
               rounded-xl
-              bg-white
-              hover:bg-slate-50
               border
               border-slate-200
-              text-slate-700
-              font-semibold
-              text-sm
+              bg-white
+              px-4
+              py-2.5
+              font-medium
               shadow-sm
-              hover:shadow
-              transition-all
-              duration-200
-              active:scale-95
+              hover:bg-slate-50
               disabled:opacity-60
-              self-start
-              sm:self-auto
             "
           >
+
             <RefreshCw
               size={16}
-              className={`text-slate-500 ${loading ? "animate-spin text-blue-600" : ""}`}
+              className={loading ? "animate-spin" : ""}
             />
-            <span>Refresh</span>
+
+            Refresh Dashboard
+
           </button>
+
         </div>
 
-        {/* ======================================
-            Loading Skeleton State
-        ====================================== */}
-        {loading && (
-          <div className="space-y-6">
-            {/* Cards Skeleton */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="h-32 rounded-2xl bg-white border border-slate-200/80 p-5 animate-pulse shadow-sm flex flex-col justify-between"
-                >
-                  <div className="h-4 w-1/2 bg-slate-200 rounded-md" />
-                  <div className="h-8 w-1/3 bg-slate-300 rounded-lg" />
-                </div>
-              ))}
-            </div>
+        {/* ========================================== */}
+        {/* Error */}
+        {/* ========================================== */}
 
-            {/* Quick Actions Skeleton */}
-            <div className="h-48 rounded-2xl bg-white border border-slate-200/80 p-6 animate-pulse shadow-sm" />
-          </div>
-        )}
-
-        {/* ======================================
-            Error Banner
-        ====================================== */}
         {!loading && error && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="
-              flex
-              items-center
-              justify-between
-              gap-4
-              rounded-2xl
-              border
-              border-red-200
-              bg-red-50/90
-              p-5
-              text-red-800
-              shadow-sm
-            "
-          >
-            <div className="flex items-center gap-3">
-              <AlertCircle size={22} className="text-red-500 flex-shrink-0" />
-              <div>
-                <h4 className="font-semibold text-sm">Dashboard Update Error</h4>
-                <p className="text-xs text-red-600 mt-0.5">{error}</p>
-              </div>
+
+          <div className="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 p-5">
+
+            <AlertCircle className="mt-0.5 text-red-600" />
+
+            <div>
+
+              <h3 className="font-semibold text-red-700">
+
+                Failed to load dashboard
+
+              </h3>
+
+              <p className="mt-1 text-sm text-red-600">
+
+                {error}
+
+              </p>
+
             </div>
 
-            <button
-              onClick={loadDashboard}
-              className="px-3.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-semibold transition"
-            >
-              Retry
-            </button>
-          </motion.div>
+          </div>
+
         )}
 
-        {/* ======================================
-            Dashboard Content (With Entry Motion)
-        ====================================== */}
-        {!loading && !error && summary && (
+        {/* ========================================== */}
+        {/* Dashboard */}
+        {/* ========================================== */}
+
+        {!loading && !error && (
+
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.35 }}
             className="space-y-8"
           >
-            {/* Metric Summary Cards */}
-            <DashboardSummaryCards summary={summary} />
 
-            {/* Chart Panels */}
-            <DashboardCharts summary={summary} />
+            {/* KPI Cards */}
 
-            {/* Quick Actions Shortcuts */}
+            <DashboardSummaryCards
+              summary={dashboard.summary}
+            />
+
+            {/* Charts */}
+
+            <DashboardCharts
+              monthlyConsumption={dashboard.monthlyConsumption}
+              buildingUsage={dashboard.buildingUsage}
+              paymentStatus={dashboard.paymentStatus}
+              billStatus={dashboard.billStatus}
+              revenueTrend={dashboard.revenueTrend}
+            />
+
+            {/* Tables */}
+
+            <div className="space-y-8">
+
+    <TopConsumersTable
+        data={dashboard.topConsumers}
+        loading={loading}
+    />
+
+    <div className="grid gap-8 xl:grid-cols-2">
+
+        <RecentBillsTable
+            data={dashboard.recentBills}
+            loading={loading}
+        />
+
+        <RecentPaymentsTable
+            data={dashboard.recentPayments}
+            loading={loading}
+        />
+
+    </div>
+
+</div>
+
+            {/* Alerts */}
+
+            <DashboardAlerts
+              alerts={dashboard.alerts}
+            />
+
+            {/* Quick Actions */}
+
             <DashboardQuickActions />
+
           </motion.div>
+
         )}
 
       </div>
+
     </DashboardLayout>
+
   );
+
 }
