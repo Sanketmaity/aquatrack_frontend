@@ -61,7 +61,7 @@ export default function Navbar() {
 
           <LanguageSwitcher />
 
-          <button
+          {/* <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="
               p-2.5
@@ -81,7 +81,7 @@ export default function Navbar() {
             title={t("common.themeToggle")}
           >
             {theme === "dark" ? <FaSun size={17} /> : <FaMoon size={17} />}
-          </button>
+          </button> */}
 
           <Link
             to="/login"

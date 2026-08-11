@@ -190,7 +190,7 @@ export default function Hero() {
           transition={{ delay: 0.25, duration: 0.8 }}
           className="mt-8 text-xl text-[#475569] dark:text-[#CBD5E1] max-w-3xl mx-auto"
         >
-          {t("landing.heroSubtitle")}
+          {/* {t("landing.heroSubtitle")} */}
         </motion.p>
 
         <motion.div

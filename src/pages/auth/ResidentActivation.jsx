@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ShieldCheck, Loader2, AlertCircle, CheckCircle2, Building, Home } from "lucide-react";
+import {
+  ShieldCheck,
+  Loader2,
+  AlertCircle,
+  CheckCircle2,
+  Building,
+  Home,
+} from "lucide-react";
+
+import { toast } from "../../components/ui/Toaster";
 
 import residentInvitationService from "../../services/residentInvitationService";
 
@@ -17,9 +26,10 @@ export default function ResidentActivation() {
 
   const navigate = useNavigate();
 
-  // ==========================================
+  // ============================================================
   // State
-  // ==========================================
+  // ============================================================
+
   const [loading, setLoading] = useState(true);
   const [resident, setResident] = useState(null);
   const [error, setError] = useState("");
@@ -28,21 +38,38 @@ export default function ResidentActivation() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  // ==========================================
+  // ============================================================
   // Validate Invitation Token
-  // ==========================================
+  // ============================================================
+
   useEffect(() => {
+    let isMounted = true;
+
     async function validate() {
       try {
         const response =
           await residentInvitationService.getActivationDetails(token);
-        setResident(response.data);
+
+        if (isMounted) {
+          setResident(response.data);
+        }
       } catch (err) {
-        setError(
-          err.response?.data?.message || "Invalid or expired activation link."
+        console.error(
+          "Resident invitation validation error:",
+          err
         );
+
+        if (isMounted) {
+          setError(
+            err?.response?.data?.message ||
+              err?.response?.data?.error ||
+              "Invalid or expired activation link."
+          );
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     }
 
@@ -52,26 +79,51 @@ export default function ResidentActivation() {
       setLoading(false);
       setError("Activation token is missing.");
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [token]);
 
-  // ==========================================
+  // ============================================================
   // Submit Handler
-  // ==========================================
+  // ============================================================
+
   const handleSubmit = async (event) => {
     event?.preventDefault();
 
+    // ==========================================================
+    // Validate Password Fields
+    // ==========================================================
+
     if (!password || !confirmPassword) {
-      alert("Please fill all fields.");
+      toast.error(
+        "Missing Password",
+        "Please fill in both password fields."
+      );
+
       return;
     }
 
+    // ==========================================================
+    // Validate Password Match
+    // ==========================================================
+
     if (password !== confirmPassword) {
-      alert("Passwords do not match.");
+      toast.error(
+        "Password Mismatch",
+        "Password and confirm password do not match."
+      );
+
       return;
     }
 
     try {
       setSubmitting(true);
+
+      // ========================================================
+      // Activate Resident Account
+      // ========================================================
 
       await residentInvitationService.activateResident({
         invitationToken: token,
@@ -79,185 +131,750 @@ export default function ResidentActivation() {
         confirmPassword,
       });
 
-      alert("Resident account activated successfully!");
-      navigate("/login");
+      // ========================================================
+      // Success Toast
+      // ========================================================
+
+      toast.success(
+        "Account Activated",
+        "Your resident account has been activated successfully."
+      );
+
+      // ========================================================
+      // Clear Password Fields
+      // ========================================================
+
+      setPassword("");
+      setConfirmPassword("");
+
+      // ========================================================
+      // Redirect To Login
+      // ========================================================
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 1200);
     } catch (err) {
-      alert(err.response?.data?.message || "Failed to activate account.");
+      console.error(
+        "Resident activation error:",
+        err
+      );
+
+      const message =
+        err?.response?.data?.message ||
+        err?.response?.data?.error ||
+        "Failed to activate your resident account.";
+
+      // ========================================================
+      // Error Toast
+      // ========================================================
+
+      toast.error(
+        "Activation Failed",
+        message
+      );
     } finally {
       setSubmitting(false);
     }
   };
 
-  // ==========================================
+  // ============================================================
   // Loading Screen
-  // ==========================================
+  // ============================================================
+
   if (loading) {
     return (
-      <div className="relative min-h-screen overflow-hidden flex items-center justify-center">
+      <div
+        className="
+          relative
+          flex
+          min-h-screen
+          items-center
+          justify-center
+          overflow-hidden
+          bg-slate-50
+        "
+      >
         <AnimatedBackground />
-        <div className="relative z-10 p-8 rounded-3xl bg-slate-900/85 backdrop-blur-2xl border border-slate-800 text-center text-white shadow-2xl">
-          <Loader2 size={36} className="animate-spin text-cyan-400 mx-auto mb-4" />
-          <p className="text-sm font-medium text-slate-300">
-            Validating resident activation link...
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+            scale: 0.96,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          }}
+          className="
+            relative
+            z-10
+            w-full
+            max-w-sm
+            rounded-3xl
+            border
+            border-slate-200
+            bg-white/95
+            p-8
+            text-center
+            shadow-2xl
+            shadow-slate-300/50
+            backdrop-blur-xl
+          "
+        >
+          {/* Loading Icon */}
+
+          <div
+            className="
+              mx-auto
+              mb-5
+              flex
+              h-14
+              w-14
+              items-center
+              justify-center
+              rounded-2xl
+              bg-cyan-50
+              text-cyan-600
+              ring-1
+              ring-cyan-100
+            "
+          >
+            <Loader2
+              size={28}
+              className="animate-spin"
+            />
+          </div>
+
+          {/* Loading Title */}
+
+          <h2
+            className="
+              text-lg
+              font-extrabold
+              text-slate-900
+            "
+          >
+            Verifying Invitation
+          </h2>
+
+          {/* Loading Description */}
+
+          <p
+            className="
+              mt-2
+              text-sm
+              leading-relaxed
+              text-slate-500
+            "
+          >
+            Please wait while we validate your resident
+            activation link.
           </p>
-        </div>
+
+          {/* Loading Progress */}
+
+          <div
+            className="
+              mx-auto
+              mt-5
+              h-1.5
+              w-32
+              overflow-hidden
+              rounded-full
+              bg-slate-100
+            "
+          >
+            <motion.div
+              animate={{
+                x: ["-100%", "100%"],
+              }}
+              transition={{
+                duration: 1.2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="
+                h-full
+                w-1/2
+                rounded-full
+                bg-gradient-to-r
+                from-sky-500
+                via-cyan-500
+                to-teal-400
+              "
+            />
+          </div>
+        </motion.div>
       </div>
     );
   }
 
-  // ==========================================
+  // ============================================================
   // Error Screen
-  // ==========================================
+  // ============================================================
+
   if (error) {
     return (
-      <div className="relative min-h-screen overflow-hidden flex items-center justify-center p-6">
+      <div
+        className="
+          relative
+          flex
+          min-h-screen
+          items-center
+          justify-center
+          overflow-hidden
+          bg-slate-50
+          p-6
+        "
+      >
         <AnimatedBackground />
-        <div className="relative z-10 w-full max-w-md p-8 rounded-3xl bg-slate-900/85 backdrop-blur-2xl border border-red-500/30 text-center text-white shadow-2xl">
-          <div className="w-14 h-14 rounded-2xl bg-red-500/10 text-red-400 border border-red-500/20 flex items-center justify-center mx-auto mb-4">
-            <AlertCircle size={28} />
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 25,
+            scale: 0.96,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          }}
+          transition={{
+            duration: 0.5,
+          }}
+          className="
+            relative
+            z-10
+            w-full
+            max-w-md
+            overflow-hidden
+            rounded-3xl
+            border
+            border-red-200
+            bg-white/95
+            p-8
+            text-center
+            shadow-2xl
+            shadow-slate-300/50
+            backdrop-blur-xl
+          "
+        >
+          {/* Error Accent */}
+
+          <div
+            className="
+              absolute
+              left-0
+              right-0
+              top-0
+              h-1
+              bg-gradient-to-r
+              from-red-400
+              via-rose-500
+              to-orange-400
+            "
+          />
+
+          {/* Error Icon */}
+
+          <div
+            className="
+              mx-auto
+              mb-5
+              flex
+              h-16
+              w-16
+              items-center
+              justify-center
+              rounded-2xl
+              border
+              border-red-100
+              bg-red-50
+              text-red-500
+            "
+          >
+            <AlertCircle size={30} />
           </div>
-          <h2 className="text-2xl font-bold text-white mb-2">Activation Error</h2>
-          <p className="text-sm text-slate-400 mb-6">{error}</p>
+
+          {/* Error Title */}
+
+          <h2
+            className="
+              text-2xl
+              font-extrabold
+              text-slate-900
+            "
+          >
+            Activation Error
+          </h2>
+
+          {/* Error Message */}
+
+          <p
+            className="
+              mt-3
+              text-sm
+              leading-relaxed
+              text-slate-500
+            "
+          >
+            {error}
+          </p>
+
+          {/* Back To Login */}
+
           <Link
             to="/login"
-            className="inline-block w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 font-semibold transition"
+            className="
+              mt-7
+              inline-flex
+              w-full
+              items-center
+              justify-center
+              rounded-xl
+              bg-gradient-to-r
+              from-sky-500
+              via-cyan-500
+              to-teal-500
+              px-5
+              py-3
+              text-sm
+              font-bold
+              text-white
+              shadow-lg
+              shadow-cyan-500/20
+              transition-all
+              duration-200
+              hover:-translate-y-0.5
+              hover:shadow-xl
+              hover:shadow-cyan-500/25
+              active:scale-[0.98]
+            "
           >
             ← Back to Login
           </Link>
-        </div>
+        </motion.div>
       </div>
     );
   }
 
-  // ==========================================
+  // ============================================================
   // Main Activation View
-  // ==========================================
+  // ============================================================
+
   return (
-    <div className="relative min-h-screen overflow-hidden selection:bg-cyan-500 selection:text-white">
-      {/* Background Canvas */}
+    <div
+      className="
+        relative
+        min-h-screen
+        overflow-hidden
+        bg-slate-50
+        text-slate-900
+        selection:bg-cyan-500
+        selection:text-white
+      "
+    >
+      {/* ======================================================
+          Light Animated Background
+      ====================================================== */}
+
       <AnimatedBackground />
 
-      <div className="relative z-10 grid min-h-screen lg:grid-cols-2">
-        {/* Left Hero */}
+      <div
+        className="
+          relative
+          z-10
+          grid
+          min-h-screen
+          lg:grid-cols-2
+        "
+      >
+        {/* ====================================================
+            Left Hero
+        ==================================================== */}
+
         <LeftHero />
 
-        {/* Right Form Card */}
-        <div className="flex items-center justify-center p-6 sm:p-10 relative">
-          
-          {/* Background Neon Aura Pulse */}
-          <div className="absolute -z-10 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" />
+        {/* ====================================================
+            Right Form Section
+        ==================================================== */}
+
+        <div
+          className="
+            relative
+            flex
+            items-center
+            justify-center
+            p-6
+            sm:p-10
+          "
+        >
+          {/* Soft Light Aura */}
+
+          <div
+            className="
+              pointer-events-none
+              absolute
+              -z-10
+              h-96
+              w-96
+              rounded-full
+              bg-cyan-200/40
+              blur-3xl
+              animate-pulse
+            "
+          />
+
+          {/* ==================================================
+              Activation Card
+          ================================================== */}
 
           <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            initial={{
+              opacity: 0,
+              y: 30,
+              scale: 0.96,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+            }}
+            transition={{
+              duration: 0.7,
+              ease: [0.16, 1, 0.3, 1],
+            }}
             className="
+              relative
               w-full
               max-w-md
+              overflow-hidden
               rounded-3xl
               border
-              border-slate-800/90
-              bg-slate-900/85
-              backdrop-blur-2xl
-              shadow-[0_25px_90px_rgba(0,0,0,0.6)]
-              shadow-cyan-950/30
+              border-slate-200
+              bg-white/95
+              p-8
+              text-slate-900
+              shadow-2xl
+              shadow-slate-300/50
+              backdrop-blur-xl
               transition-all
               duration-500
-              p-8
               sm:p-10
-              relative
-              overflow-hidden
-              text-white
             "
           >
-            {/* Top Gradient Highlight Strip */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-cyan-400 to-teal-400" />
+            {/* =================================================
+                Top Gradient Highlight
+            ================================================= */}
 
-            {/* Logo Container */}
+            <div
+              className="
+                absolute
+                left-0
+                right-0
+                top-0
+                h-1
+                bg-gradient-to-r
+                from-sky-500
+                via-cyan-500
+                to-teal-400
+              "
+            />
+
+            {/* =================================================
+                Logo
+            ================================================= */}
+
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="flex flex-col items-center mb-6 relative"
+              initial={{
+                scale: 0.8,
+                opacity: 0,
+              }}
+              animate={{
+                scale: 1,
+                opacity: 1,
+              }}
+              transition={{
+                delay: 0.2,
+                duration: 0.5,
+              }}
+              className="
+                relative
+                mb-6
+                flex
+                flex-col
+                items-center
+              "
             >
-              <div className="absolute w-20 h-20 bg-cyan-500/20 rounded-full blur-xl animate-pulse" />
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  h-20
+                  w-20
+                  rounded-full
+                  bg-cyan-200/50
+                  blur-xl
+                  animate-pulse
+                "
+              />
+
               <img
                 src={logo}
                 alt="AquaTrack"
-                className="w-20 h-20 drop-shadow-xl transform hover:scale-105 transition-transform duration-300 relative z-10"
+                className="
+                  relative
+                  z-10
+                  h-20
+                  w-20
+                  object-contain
+                  drop-shadow-lg
+                  transition-transform
+                  duration-300
+                  hover:scale-105
+                "
               />
             </motion.div>
 
-            {/* Heading */}
-            <div className="text-center mb-6">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold mb-3">
+            {/* =================================================
+                Heading
+            ================================================= */}
+
+            <div className="mb-6 text-center">
+              {/* Verification Badge */}
+
+              <div
+                className="
+                  mb-3
+                  inline-flex
+                  items-center
+                  gap-1.5
+                  rounded-full
+                  border
+                  border-emerald-200
+                  bg-emerald-50
+                  px-3
+                  py-1
+                  text-xs
+                  font-bold
+                  text-emerald-700
+                "
+              >
                 <CheckCircle2 size={13} />
-                <span>Resident Invitation Verified</span>
+
+                <span>
+                  Resident Invitation Verified
+                </span>
               </div>
-              
-              <h1 className="text-3xl font-extrabold text-white tracking-tight">
+
+              {/* Title */}
+
+              <h1
+                className="
+                  text-3xl
+                  font-extrabold
+                  tracking-tight
+                  text-slate-900
+                "
+              >
                 Activate Resident Portal
               </h1>
-              <p className="mt-2 text-sm text-slate-400 leading-relaxed">
-                Welcome <strong className="text-cyan-300 font-semibold">{resident?.firstName} {resident?.lastName}</strong>!
+
+              {/* Welcome */}
+
+              <p
+                className="
+                  mt-2
+                  text-sm
+                  leading-relaxed
+                  text-slate-500
+                "
+              >
+                Welcome{" "}
+                <strong
+                  className="
+                    font-bold
+                    text-cyan-700
+                  "
+                >
+                  {resident?.firstName}{" "}
+                  {resident?.lastName}
+                </strong>
+                !
               </p>
             </div>
 
-            {/* Resident Assignment Details Box */}
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25 }}
-              className="mb-6 rounded-2xl bg-slate-950/60 border border-slate-800/80 p-4 text-xs space-y-2"
+            {/* =================================================
+                Resident Assignment Details
+            ================================================= */}
+
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 10,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                delay: 0.25,
+              }}
+              className="
+                mb-6
+                space-y-2
+                rounded-2xl
+                border
+                border-slate-200
+                bg-slate-50
+                p-4
+                text-xs
+              "
             >
-              <div className="flex items-center gap-2 text-slate-300">
-                <Building size={15} className="text-cyan-400" />
-                <span className="text-slate-400">Apartment:</span>
-                <span className="font-semibold text-white">{resident?.apartmentName || "N/A"}</span>
+              {/* Apartment */}
+
+              <div
+                className="
+                  flex
+                  items-center
+                  gap-2
+                  text-slate-600
+                "
+              >
+                <Building
+                  size={16}
+                  className="text-cyan-600"
+                />
+
+                <span className="text-slate-500">
+                  Apartment:
+                </span>
+
+                <span
+                  className="
+                    font-bold
+                    text-slate-900
+                  "
+                >
+                  {resident?.apartmentName || "N/A"}
+                </span>
               </div>
 
-              <div className="flex items-center gap-2 text-slate-300 pt-1.5 border-t border-slate-800/60">
-                <Home size={15} className="text-cyan-400" />
-                <span className="text-slate-400">House / Flat No:</span>
-                <span className="font-semibold text-cyan-300">{resident?.houseNumber || "N/A"}</span>
+              {/* House / Flat */}
+
+              <div
+                className="
+                  flex
+                  items-center
+                  gap-2
+                  border-t
+                  border-slate-200
+                  pt-2
+                  text-slate-600
+                "
+              >
+                <Home
+                  size={16}
+                  className="text-cyan-600"
+                />
+
+                <span className="text-slate-500">
+                  House / Flat No:
+                </span>
+
+                <span
+                  className="
+                    font-bold
+                    text-cyan-700
+                  "
+                >
+                  {resident?.houseNumber || "N/A"}
+                </span>
               </div>
             </motion.div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-5">
+            {/* =================================================
+                Activation Form
+            ================================================= */}
+
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-5"
+            >
+              {/* Password */}
+
               <motion.div
-                initial={{ x: 20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
+                initial={{
+                  x: 20,
+                  opacity: 0,
+                }}
+                animate={{
+                  x: 0,
+                  opacity: 1,
+                }}
+                transition={{
+                  delay: 0.3,
+                  duration: 0.5,
+                }}
               >
                 <PasswordInput
                   name="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) =>
+                    setPassword(e.target.value)
+                  }
                   disabled={submitting}
                   placeholder="Create Password"
                 />
               </motion.div>
 
+              {/* Confirm Password */}
+
               <motion.div
-                initial={{ x: 20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.5 }}
+                initial={{
+                  x: 20,
+                  opacity: 0,
+                }}
+                animate={{
+                  x: 0,
+                  opacity: 1,
+                }}
+                transition={{
+                  delay: 0.4,
+                  duration: 0.5,
+                }}
               >
                 <PasswordInput
                   name="confirmPassword"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={(e) =>
+                    setConfirmPassword(e.target.value)
+                  }
                   disabled={submitting}
                   placeholder="Confirm Password"
                 />
               </motion.div>
 
-              {/* Submit Button */}
+              {/* =================================================
+                  Submit Button
+              ================================================= */}
+
               <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5 }}
+                initial={{
+                  y: 20,
+                  opacity: 0,
+                }}
+                animate={{
+                  y: 0,
+                  opacity: 1,
+                }}
+                transition={{
+                  delay: 0.5,
+                }}
                 className="pt-2"
               >
                 <LoadingButton
@@ -266,15 +883,59 @@ export default function ResidentActivation() {
                 />
               </motion.div>
 
-              {/* Footer & Security Status */}
-              <div className="pt-4 border-t border-slate-800/80 text-center">
-                <div className="flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-400">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <ShieldCheck size={13} className="text-emerald-400" />
-                  <span>256-Bit Encrypted Portal</span>
+              {/* =================================================
+                  Security Footer
+              ================================================= */}
+
+              <div
+                className="
+                  border-t
+                  border-slate-200
+                  pt-4
+                  text-center
+                "
+              >
+                <div
+                  className="
+                    flex
+                    items-center
+                    justify-center
+                    gap-1.5
+                    text-[11px]
+                    font-medium
+                    text-slate-500
+                  "
+                >
+                  <span
+                    className="
+                      h-2
+                      w-2
+                      animate-pulse
+                      rounded-full
+                      bg-emerald-500
+                    "
+                  />
+
+                  <ShieldCheck
+                    size={13}
+                    className="text-emerald-500"
+                  />
+
+                  <span>
+                    256-Bit Encrypted Portal
+                  </span>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-1">
-                  © {new Date().getFullYear()} AquaTrack • All Rights Reserved
+
+                <p
+                  className="
+                    mt-1
+                    text-[11px]
+                    font-medium
+                    text-slate-400
+                  "
+                >
+                  © {new Date().getFullYear()} AquaTrack •
+                  {" "}All Rights Reserved
                 </p>
               </div>
             </form>

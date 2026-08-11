@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 
 export default function AnimatedBackground() {
-  // Floating bubble parameters
+  // ============================================================
+  // Floating Bubble Parameters
+  // ============================================================
+
   const bubbles = [
     { size: 28, left: "8%", duration: 14, delay: 0 },
     { size: 16, left: "22%", duration: 18, delay: 2 },
@@ -13,7 +16,10 @@ export default function AnimatedBackground() {
     { size: 18, left: "94%", duration: 17, delay: 7 },
   ];
 
-  // Concentric water drop impact points
+  // ============================================================
+  // Water Ripple Impact Points
+  // ============================================================
+
   const ripples = [
     { top: "25%", left: "30%", delay: 0 },
     { top: "65%", left: "75%", delay: 3.5 },
@@ -21,12 +27,35 @@ export default function AnimatedBackground() {
   ];
 
   return (
-    <div className="fixed inset-0 overflow-hidden -z-10 pointer-events-none select-none">
-      
-      {/* 1. Deep Obsidian Base Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#020617] via-[#0F172A] to-[#020617]" />
+    <div
+      className="
+        fixed
+        inset-0
+        overflow-hidden
+        -z-10
+        pointer-events-none
+        select-none
+      "
+    >
+      {/* ========================================================
+          1. Light Aqua Base
+      ======================================================== */}
 
-      {/* 2. Electric Cyan Shimmer Ray */}
+      <div
+        className="
+          absolute
+          inset-0
+          bg-gradient-to-br
+          from-white
+          via-sky-50
+          to-cyan-50
+        "
+      />
+
+      {/* ========================================================
+          2. Soft Moving Aqua Shimmer
+      ======================================================== */}
+
       <motion.div
         animate={{
           x: ["-100%", "200%"],
@@ -37,10 +66,26 @@ export default function AnimatedBackground() {
           repeatDelay: 3,
           ease: "easeInOut",
         }}
-        className="absolute -top-1/2 left-0 w-96 h-[200%] bg-gradient-to-r from-transparent via-[#22D3EE]/12 to-transparent transform -rotate-45 blur-2xl"
+        className="
+          absolute
+          -top-1/2
+          left-0
+          h-[200%]
+          w-96
+          -rotate-45
+          transform
+          bg-gradient-to-r
+          from-transparent
+          via-cyan-400/8
+          to-transparent
+          blur-2xl
+        "
       />
 
-      {/* 3. Glowing Neon Blob 1 (Top Left - Electric Cyan) */}
+      {/* ========================================================
+          3. Soft Aqua Blob — Top Left
+      ======================================================== */}
+
       <motion.div
         animate={{
           x: [0, 90, -40, 0],
@@ -53,10 +98,25 @@ export default function AnimatedBackground() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute -top-16 -left-16 h-[28rem] w-[28rem] rounded-full bg-gradient-to-tr from-[#06B6D4]/25 via-[#0EA5E9]/30 to-[#10B981]/20 blur-3xl shadow-[0_0_80px_rgba(6,182,212,0.3)]"
+        className="
+          absolute
+          -top-16
+          -left-16
+          h-[28rem]
+          w-[28rem]
+          rounded-full
+          bg-gradient-to-tr
+          from-cyan-400/10
+          via-sky-400/12
+          to-emerald-300/8
+          blur-3xl
+        "
       />
 
-      {/* 4. Glowing Neon Blob 2 (Bottom Right - Indigo Sapphire) */}
+      {/* ========================================================
+          4. Soft Sky Blob — Bottom Right
+      ======================================================== */}
+
       <motion.div
         animate={{
           x: [0, -100, 30, 0],
@@ -69,14 +129,29 @@ export default function AnimatedBackground() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute -bottom-24 -right-24 h-[32rem] w-[32rem] rounded-full bg-gradient-to-br from-[#0EA5E9]/25 via-[#06B6D4]/20 to-[#38BDF8]/15 blur-3xl shadow-[0_0_90px_rgba(14,165,233,0.25)]"
+        className="
+          absolute
+          -bottom-24
+          -right-24
+          h-[32rem]
+          w-[32rem]
+          rounded-full
+          bg-gradient-to-br
+          from-sky-400/10
+          via-cyan-400/8
+          to-blue-300/8
+          blur-3xl
+        "
       />
 
-      {/* 5. Center Pulsing Glow Orb */}
+      {/* ========================================================
+          5. Center Soft Glow Orb
+      ======================================================== */}
+
       <motion.div
         animate={{
           scale: [1, 1.4, 1],
-          opacity: [0.25, 0.55, 0.25],
+          opacity: [0.18, 0.35, 0.18],
           x: [-30, 40, -30],
           y: [-40, 30, -40],
         }}
@@ -85,20 +160,44 @@ export default function AnimatedBackground() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-1/2 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-[#0EA5E9]/18 via-[#06B6D4]/22 to-[#34D399]/15 blur-3xl"
+        className="
+          absolute
+          top-1/2
+          left-1/2
+          h-80
+          w-80
+          -translate-x-1/2
+          -translate-y-1/2
+          rounded-full
+          bg-gradient-to-r
+          from-sky-400/8
+          via-cyan-400/10
+          to-emerald-300/8
+          blur-3xl
+        "
       />
 
-      {/* 6. Glowing Neon Water Ripples */}
-      {ripples.map((ripple, idx) => (
+      {/* ========================================================
+          6. Water Ripples
+      ======================================================== */}
+
+      {ripples.map((ripple, index) => (
         <div
-          key={idx}
-          style={{ top: ripple.top, left: ripple.left }}
-          className="absolute -translate-x-1/2 -translate-y-1/2"
+          key={index}
+          style={{
+            top: ripple.top,
+            left: ripple.left,
+          }}
+          className="
+            absolute
+            -translate-x-1/2
+            -translate-y-1/2
+          "
         >
           <motion.div
             animate={{
               scale: [0.1, 2.8],
-              opacity: [0.7, 0],
+              opacity: [0.45, 0],
             }}
             transition={{
               duration: 5.5,
@@ -106,48 +205,75 @@ export default function AnimatedBackground() {
               delay: ripple.delay,
               ease: "easeOut",
             }}
-            className="w-32 h-32 rounded-full border-2 border-[#22D3EE]/60 shadow-[0_0_15px_rgba(34,211,238,0.4)] blur-[0.5px]"
+            className="
+              h-32
+              w-32
+              rounded-full
+              border-2
+              border-cyan-400/25
+              blur-[0.5px]
+            "
           />
         </div>
       ))}
 
-      {/* 7. Dark Glassmorphic Glowing Bubbles */}
-      {bubbles.map((b, idx) => (
+      {/* ========================================================
+          7. Floating Light Water Bubbles
+      ======================================================== */}
+
+      {bubbles.map((bubble, index) => (
         <motion.div
-          key={idx}
-          initial={{ y: "110vh", opacity: 0 }}
+          key={index}
+          initial={{
+            y: "110vh",
+            opacity: 0,
+          }}
           animate={{
             y: "-10vh",
             x: [0, 25, -25, 10, 0],
-            opacity: [0, 0.8, 0.8, 0],
+            opacity: [0, 0.55, 0.55, 0],
             scale: [0.8, 1.15, 0.9, 1],
           }}
           transition={{
-            duration: b.duration,
+            duration: bubble.duration,
             repeat: Infinity,
-            delay: b.delay,
+            delay: bubble.delay,
             ease: "easeInOut",
           }}
           style={{
-            left: b.left,
-            width: `${b.size}px`,
-            height: `${b.size}px`,
+            left: bubble.left,
+            width: `${bubble.size}px`,
+            height: `${bubble.size}px`,
           }}
           className="
-            absolute 
-            rounded-full 
-            bg-[#06B6D4]/10 
-            backdrop-blur-md 
-            border 
-            border-[#22D3EE]/40 
-            shadow-[0_0_12px_rgba(6,182,212,0.3)]
+            absolute
+            rounded-full
+            border
+            border-cyan-300/40
+            bg-cyan-100/30
+            backdrop-blur-md
+            shadow-sm
+            shadow-cyan-200/40
           "
         >
-          {/* Specular Glow Dot */}
-          <div className="absolute top-1 left-1.5 w-2 h-2 rounded-full bg-[#38BDF8]/90 blur-[0.5px]" />
+          {/* ====================================================
+              Bubble Highlight
+          ==================================================== */}
+
+          <div
+            className="
+              absolute
+              top-1
+              left-1.5
+              h-2
+              w-2
+              rounded-full
+              bg-sky-300/70
+              blur-[0.5px]
+            "
+          />
         </motion.div>
       ))}
-
     </div>
   );
 }

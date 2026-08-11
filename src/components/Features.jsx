@@ -43,113 +43,327 @@ export default function Features() {
   };
 
   return (
-    <section className="relative py-28 px-6 bg-[#020617] text-[#F8FAFC] overflow-hidden">
-      <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] bg-[#06B6D4]/10 rounded-full blur-[120px]" />
-      <div className="pointer-events-none absolute bottom-0 -left-20 w-96 h-96 bg-[#0EA5E9]/10 rounded-full blur-[100px]" />
+    <section className="relative overflow-hidden bg-slate-50 px-6 py-28 text-slate-900">
 
-      <div className="max-w-6xl mx-auto relative z-10">
-        <div className="text-center max-w-2xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#06B6D4]/10 text-[#22D3EE] border border-[#06B6D4]/20 text-xs font-semibold uppercase tracking-wider mb-4"
-          >
-            <Sparkles size={14} className="text-[#22D3EE]" />
-            <span>{t("features.badge")}</span>
-          </motion.div>
+  {/* ============================================================
+      Background Ambient Effects
+  ============================================================ */}
 
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-extrabold tracking-tight text-white"
-          >
-            {t("features.heading")}{" "}
-            <span className="bg-gradient-to-r from-[#38BDF8] via-[#22D3EE] to-[#34D399] bg-clip-text text-transparent">
-              AquaTrack
-            </span>
-          </motion.h2>
+  <div className="pointer-events-none absolute -top-40 left-1/2 h-[40rem] w-[40rem] -translate-x-1/2 rounded-full bg-cyan-400/10 blur-[120px]" />
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="mt-4 text-lg text-[#CBD5E1] leading-relaxed"
-          >
-            {t("features.subtitle")}
-          </motion.p>
-        </div>
+  <div className="pointer-events-none absolute bottom-0 -left-20 h-96 w-96 rounded-full bg-sky-400/10 blur-[100px]" />
+
+
+  <div className="relative z-10 mx-auto max-w-6xl">
+
+    {/* ============================================================
+        Section Header
+    ============================================================ */}
+
+    <div className="mx-auto max-w-2xl text-center">
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        className="
+          mb-4
+          inline-flex
+          items-center
+          gap-2
+          rounded-full
+          border
+          border-cyan-200
+          bg-cyan-50
+          px-3.5
+          py-1.5
+          text-xs
+          font-semibold
+          uppercase
+          tracking-wider
+          text-cyan-700
+        "
+      >
+        <Sparkles
+          size={14}
+          className="text-cyan-500"
+        />
+
+        <span>
+          {t("features.badge")}
+        </span>
+      </motion.div>
+
+
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="
+          text-4xl
+          font-extrabold
+          tracking-tight
+          text-slate-900
+          md:text-5xl
+        "
+      >
+        {t("features.heading")}{" "}
+
+        <span
+          className="
+            bg-gradient-to-r
+            from-sky-500
+            via-cyan-500
+            to-emerald-500
+            bg-clip-text
+            text-transparent
+          "
+        >
+          AquaTrack
+        </span>
+      </motion.h2>
+
+
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.1 }}
+        className="
+          mt-4
+          text-lg
+          leading-relaxed
+          text-slate-600
+        "
+      >
+        {t("features.subtitle")}
+      </motion.p>
+
+    </div>
+
+
+    {/* ============================================================
+        Feature Cards
+    ============================================================ */}
+
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      className="
+        mt-16
+        grid
+        gap-8
+        md:grid-cols-3
+      "
+    >
+
+      {features.map((f, i) => (
 
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mt-16 grid md:grid-cols-3 gap-8"
+          key={i}
+          variants={cardVariants}
+          whileHover={{
+            y: -8,
+            scale: 1.02,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 20,
+          }}
+          className="
+            group
+            relative
+            flex
+            flex-col
+            justify-between
+            overflow-hidden
+            rounded-3xl
+            border
+            border-slate-200
+            bg-white
+            p-8
+            shadow-lg
+            shadow-slate-200/60
+            transition-all
+            duration-500
+            hover:border-cyan-300
+            hover:shadow-2xl
+            hover:shadow-cyan-500/10
+          "
         >
-          {features.map((f, i) => (
-            <motion.div
-              key={i}
-              variants={cardVariants}
-              whileHover={{ y: -8, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+
+          {/* Ambient Card Glow */}
+
+          <div
+            className="
+              pointer-events-none
+              absolute
+              -bottom-12
+              -right-12
+              h-36
+              w-36
+              rounded-full
+              bg-cyan-100
+              blur-2xl
+              transition-all
+              duration-500
+              group-hover:bg-cyan-200
+            "
+          />
+
+
+          <div>
+
+            {/* ====================================================
+                Icon + Arrow
+            ==================================================== */}
+
+            <div className="mb-6 flex items-center justify-between">
+
+              <div
+                className="
+                  flex
+                  h-14
+                  w-14
+                  items-center
+                  justify-center
+                  rounded-2xl
+                  bg-gradient-to-tr
+                  from-sky-500
+                  to-cyan-500
+                  text-white
+                  shadow-lg
+                  shadow-sky-500/25
+                  transition-transform
+                  duration-300
+                  group-hover:rotate-6
+                  group-hover:scale-110
+                "
+              >
+                {f.icon}
+              </div>
+
+
+              <span
+                className="
+                  rounded-xl
+                  border
+                  border-slate-200
+                  bg-slate-50
+                  p-2
+                  text-slate-400
+                  transition-colors
+                  group-hover:border-cyan-200
+                  group-hover:bg-cyan-50
+                  group-hover:text-cyan-600
+                "
+              >
+                <ArrowUpRight size={18} />
+              </span>
+
+            </div>
+
+
+            {/* ====================================================
+                Tag
+            ==================================================== */}
+
+            <span
               className="
-                group
-                relative
-                p-8
-                rounded-3xl
-                bg-[#0F172A]/80
-                backdrop-blur-xl
-                border
-                border-[#334155]
-                hover:border-[#0EA5E9]/40
-                shadow-xl
-                hover:shadow-2xl
-                hover:shadow-[#0EA5E9]/10
-                transition-all
-                duration-500
-                overflow-hidden
-                flex
-                flex-col
-                justify-between
+                mb-1
+                inline-block
+                font-mono
+                text-[11px]
+                font-semibold
+                uppercase
+                tracking-wider
+                text-cyan-600
               "
             >
-              <div className="pointer-events-none absolute -right-12 -bottom-12 w-36 h-36 bg-[#06B6D4]/10 rounded-full blur-2xl group-hover:bg-[#0EA5E9]/20 transition-colors duration-500" />
+              {f.tag}
+            </span>
 
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0EA5E9] to-[#06B6D4] text-white shadow-lg shadow-[#0EA5E9]/25 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
-                    {f.icon}
-                  </div>
 
-                  <span className="p-2 rounded-xl bg-[#1E293B]/80 text-[#CBD5E1] group-hover:text-[#22D3EE] group-hover:bg-[#1E293B] transition-colors">
-                    <ArrowUpRight size={18} />
-                  </span>
-                </div>
+            {/* ====================================================
+                Title
+            ==================================================== */}
 
-                <span className="inline-block text-[11px] font-mono font-semibold text-[#22D3EE] uppercase tracking-wider mb-1">
-                  {f.tag}
-                </span>
+            <h3
+              className="
+                text-2xl
+                font-bold
+                text-slate-900
+                transition-colors
+                group-hover:text-sky-600
+              "
+            >
+              {f.title}
+            </h3>
 
-                <h3 className="text-2xl font-bold text-[#F8FAFC] group-hover:text-[#38BDF8] transition-colors">
-                  {f.title}
-                </h3>
 
-                <p className="mt-3 text-sm text-[#CBD5E1] leading-relaxed">
-                  {f.desc}
-                </p>
-              </div>
+            {/* ====================================================
+                Description
+            ==================================================== */}
 
-              <div className="mt-8 pt-4 border-t border-[#334155]/60 flex items-center justify-between text-xs text-[#CBD5E1]/60">
-                <span>{t("features.engine")}</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE] group-hover:animate-ping" />
-              </div>
-            </motion.div>
-          ))}
+            <p
+              className="
+                mt-3
+                text-sm
+                leading-relaxed
+                text-slate-600
+              "
+            >
+              {f.desc}
+            </p>
+
+          </div>
+
+
+          {/* ========================================================
+              Card Footer
+          ======================================================== */}
+
+          <div
+            className="
+              mt-8
+              flex
+              items-center
+              justify-between
+              border-t
+              border-slate-200
+              pt-4
+              text-xs
+              text-slate-400
+            "
+          >
+
+            <span>
+              {t("features.engine")}
+            </span>
+
+            <span
+              className="
+                h-1.5
+                w-1.5
+                rounded-full
+                bg-cyan-500
+                group-hover:animate-ping
+              "
+            />
+
+          </div>
+
         </motion.div>
-      </div>
-    </section>
+
+      ))}
+
+    </motion.div>
+
+  </div>
+
+</section>
   );
 }

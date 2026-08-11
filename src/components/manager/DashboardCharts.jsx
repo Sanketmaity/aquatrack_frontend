@@ -272,7 +272,7 @@ export default function DashboardCharts({
 
         </ChartCard>
 
-        <ChartCard
+        {/* <ChartCard
           title="Revenue Trend"
           icon={IndianRupee}
         >
@@ -332,7 +332,7 @@ export default function DashboardCharts({
 
           </ResponsiveContainer>
 
-        </ChartCard>
+        </ChartCard> */}
 
       </div>
 

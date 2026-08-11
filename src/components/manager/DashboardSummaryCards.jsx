@@ -28,18 +28,18 @@ export default function DashboardSummaryCards({ summary }) {
       icon: Home,
       color: "from-indigo-600 to-blue-500",
     },
-    {
-      title: "Occupied",
-      value: summary?.occupiedHouseholds ?? 0,
-      icon: CheckCircle2,
-      color: "from-green-600 to-emerald-500",
-    },
-    {
-      title: "Vacant",
-      value: summary?.vacantHouseholds ?? 0,
-      icon: XCircle,
-      color: "from-red-500 to-orange-500",
-    },
+    // {
+    //   title: "Occupied",
+    //   value: summary?.occupiedHouseholds ?? 0,
+    //   icon: CheckCircle2,
+    //   color: "from-green-600 to-emerald-500",
+    // },
+    // {
+    //   title: "Vacant",
+    //   value: summary?.vacantHouseholds ?? 0,
+    //   icon: XCircle,
+    //   color: "from-red-500 to-orange-500",
+    // },
     {
       title: "Residents",
       value: summary?.totalResidents ?? 0,
@@ -52,36 +52,36 @@ export default function DashboardSummaryCards({ summary }) {
       icon: Droplets,
       color: "from-cyan-600 to-sky-500",
     },
-    {
-      title: "Bills",
-      value: summary?.totalBills ?? 0,
-      icon: Receipt,
-      color: "from-orange-500 to-amber-500",
-    },
-    {
-      title: "Paid Bills",
-      value: summary?.paidBills ?? 0,
-      icon: Wallet,
-      color: "from-emerald-600 to-lime-500",
-    },
-    {
-      title: "Pending Bills",
-      value: summary?.pendingBills ?? 0,
-      icon: Clock3,
-      color: "from-yellow-500 to-orange-500",
-    },
-    {
-      title: "Revenue",
-      value: `₹${summary?.totalRevenueCollected ?? 0}`,
-      icon: IndianRupee,
-      color: "from-green-600 to-teal-500",
-    },
-    {
-      title: "Pending Amount",
-      value: `₹${summary?.pendingAmount ?? 0}`,
-      icon: TrendingUp,
-      color: "from-rose-500 to-red-500",
-    },
+    // {
+    //   title: "Bills",
+    //   value: summary?.totalBills ?? 0,
+    //   icon: Receipt,
+    //   color: "from-orange-500 to-amber-500",
+    // },
+    // {
+    //   title: "Paid Bills",
+    //   value: summary?.paidBills ?? 0,
+    //   icon: Wallet,
+    //   color: "from-emerald-600 to-lime-500",
+    // },
+    // {
+    //   title: "Pending Bills",
+    //   value: summary?.pendingBills ?? 0,
+    //   icon: Clock3,
+    //   color: "from-yellow-500 to-orange-500",
+    // },
+    // {
+    //   title: "Revenue",
+    //   value: `₹${summary?.totalRevenueCollected ?? 0}`,
+    //   icon: IndianRupee,
+    //   color: "from-green-600 to-teal-500",
+    // },
+    // {
+    //   title: "Pending Amount",
+    //   value: `₹${summary?.pendingAmount ?? 0}`,
+    //   icon: TrendingUp,
+    //   color: "from-rose-500 to-red-500",
+    // },
   ];
 
   return (
