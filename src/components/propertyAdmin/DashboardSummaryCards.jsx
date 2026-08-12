@@ -49,19 +49,19 @@ export default function DashboardSummaryCards({ summary }) {
         />
       </motion.div>
 
-      <motion.div variants={itemVariants}>
+      {/* <motion.div variants={itemVariants}>
         <StatCard
           title="Floors"
           value={summary.totalFloors ?? 0}
           icon={Building2}
           color="blue"
         />
-      </motion.div>
+      </motion.div> */}
 
       <motion.div variants={itemVariants}>
         <StatCard
-          title="Households"
-          value={summary.totalHouseholds ?? 0}
+          title="Apartments"
+          value={summary.totalApartments ?? 0}
           icon={Home}
           color="yellow"
         />
@@ -85,16 +85,16 @@ export default function DashboardSummaryCards({ summary }) {
         />
       </motion.div>
 
-      <motion.div variants={itemVariants}>
+      {/* <motion.div variants={itemVariants}>
         <StatCard
           title="Water Usage"
           value={summary.totalWaterUsage ?? 0}
           icon={Building2}
           color="indigo"
         />
-      </motion.div>
+      </motion.div> */}
 
-      <motion.div variants={itemVariants}>
+      {/* <motion.div variants={itemVariants}>
         <StatCard
           title="Water Cost"
           value={summary.totalWaterCost ? `₹${summary.totalWaterCost.toLocaleString()}` : 0}
@@ -110,7 +110,7 @@ export default function DashboardSummaryCards({ summary }) {
           icon={Building2}
           color="slate"
         />
-      </motion.div>
+      </motion.div> */}
     </motion.div>
   );
 }

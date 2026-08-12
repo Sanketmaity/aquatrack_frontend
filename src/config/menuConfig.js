@@ -227,9 +227,6 @@ import {
   ArrowLeftRight,
 } from "lucide-react";
 
-import { GiPayMoney } from "react-icons/gi";
-import { PiPaypalLogo } from "react-icons/pi";
-
 // ==========================================
 // Menu Configuration
 // ==========================================
@@ -523,12 +520,6 @@ export const menuConfig = {
       },
 
       {
-        title: "menu.payments",
-        icon: PiPaypalLogo,
-        path: "/manager/payments",
-      },
-
-      {
         title: "menu.profile",
         icon: UserCircle2,
         path: "/manager/profile",
@@ -603,12 +594,6 @@ export const menuConfig = {
         path: "/manager/water-bills",
       },
 
-      {
-        title: "menu.payments",
-        icon: PiPaypalLogo,
-        path: "/manager/payments",
-      },
-
     ],
 
   },
@@ -649,12 +634,6 @@ export const menuConfig = {
         path: "/resident/water-bills",
       },
 
-      {
-        title: "menu.myPayments",
-        icon: GiPayMoney,
-        path: "/resident/my-payments",
-      },
-
     ],
 
     // ==========================
@@ -673,12 +652,6 @@ export const menuConfig = {
         title: "menu.usage",
         icon: Droplets,
         path: "/resident/water-usage",
-      },
-
-      {
-        title: "menu.payments",
-        icon: GiPayMoney,
-        path: "/resident/my-payments",
       },
 
       {
