@@ -496,15 +496,15 @@ export const menuConfig = {
       },
 
       {
-        title: "menu.waterUsage",
-        icon: Droplets,
-        path: "/manager/water-usage",
-      },
-
-      {
         title: "menu.bulkWaterPurchases",
         icon: Wallet,
         path: "/manager/bulk-water-purchases",
+      },
+
+      {
+        title: "menu.waterUsage",
+        icon: Droplets,
+        path: "/manager/water-usage",
       },
 
       {

@@ -19,24 +19,24 @@ export async function getResidentDashboardSummary() {
   return {
     data: {
       // Current July-2026 meter consumption
-      currentMonthUsage: 19,
+      currentMonthUsage: 14,
 
       // Current water bill
-      currentBill: 217,
+      currentBill: 516,
 
       // Current payment status
-      billingStatus: "PAID",
+      billingStatus: "PENDING",
 
       // No active water alert
-      waterAlerts: "None",
+      waterAlerts: "Bill Pending",
 
       // Resident information
       firstName: "SANKET",
       lastName: "MAITY",
 
-      apartmentName: "Yellow Moon",
-      buildingName: "A1",
-      householdName: "103",
+      apartmentName: "Green Valley Residency",
+      buildingName: "A BLOCK",
+      householdName: "A-001",
     },
   };
 }
@@ -51,31 +51,35 @@ export async function getResidentMonthlyConsumption() {
     data: [
       {
         month: "Jan-2026",
-        consumption: 25.88,
+        consumption: 14.00,
       },
       {
         month: "Feb-2026",
-        consumption: 26.98,
+        consumption: 20.00,
       },
       {
         month: "Mar-2026",
-        consumption: 17.24,
+        consumption: 16.00,
       },
       {
         month: "Apr-2026",
-        consumption: 25.69,
+        consumption: 22.00,
       },
       {
         month: "May-2026",
-        consumption: 37.36,
+        consumption: 18.00,
       },
       {
         month: "Jun-2026",
-        consumption: 31.54,
+        consumption: 18.00,
       },
       {
         month: "Jul-2026",
-        consumption: 19.0,
+        consumption: 20.00,
+      },
+      {
+        month: "Aug-2026",
+        consumption: 14.00,
       },
     ],
   };
@@ -89,15 +93,15 @@ export async function getResidentMonthlyConsumption() {
 export async function getResidentBillSummary() {
   return {
     data: {
-      totalBills: 1,
+      totalBills: 8,
 
-      paidBills: 1,
+      paidBills: 2,
 
-      pendingBills: 0,
+      pendingBills: 6,
 
       overdueBills: 0,
 
-      totalAmount: 217,
+      totalAmount: 5094,
     },
   };
 }

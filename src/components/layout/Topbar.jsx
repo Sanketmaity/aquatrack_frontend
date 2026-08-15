@@ -77,7 +77,7 @@ export default function Topbar() {
             {userName}
           </span>
 
-          <span className="ml-1">👋</span>
+          <span className="ml-1"></span>
 
         </p>
 

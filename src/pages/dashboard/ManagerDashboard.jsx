@@ -303,19 +303,19 @@ export default function ManagerDashboard() {
         loading={loading}
     />
 
-    <div className="grid gap-8 xl:grid-cols-2">
+    {/* <div className="grid gap-8 xl:grid-cols-2"> */}
 
         <RecentBillsTable
             data={dashboard.recentBills}
             loading={loading}
         />
 
-        <RecentPaymentsTable
+        {/* <RecentPaymentsTable
             data={dashboard.recentPayments}
             loading={loading}
-        />
+        /> */}
 
-    </div>
+    {/* </div> */}
 
 </div>
 

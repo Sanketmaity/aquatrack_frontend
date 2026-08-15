@@ -1,430 +1,456 @@
 import { motion } from "framer-motion";
 import {
-  Droplets,
-  ReceiptText,
-  CreditCard,
-  BellRing,
-  TrendingUp,
-  CheckCircle2,
-  Clock3,
-  AlertTriangle,
+    Droplets,
+    ReceiptText,
+    CreditCard,
+    BellRing,
+    TrendingUp,
+    CheckCircle2,
+    Clock3,
+    AlertTriangle,
+    ArrowUpRight,
 } from "lucide-react";
 
 export default function ResidentDashboardSummaryCards({
-  summary = {},
+    summary = {},
 }) {
-  // ============================================================
-  // Data
-  // ============================================================
+    // ============================================================
+    // Data
+    // ============================================================
 
-  const currentMonthUsage = Number(
-    summary?.currentMonthUsage ?? 0
-  );
+    const currentMonthUsage = Number(
+        summary?.currentMonthUsage ?? 0
+    );
 
-  const currentBill = Number(
-    summary?.currentBill ?? 0
-  );
+    const currentBill = Number(
+        summary?.currentBill ?? 0
+    );
 
-  const billingStatus =
-    summary?.billingStatus || "PENDING";
+    const billingStatus = String(
+        summary?.billingStatus ?? "PENDING"
+    ).toUpperCase();
 
-  const waterAlerts =
-    summary?.waterAlerts || "None";
+    const waterAlerts = String(
+        summary?.waterAlerts ?? "NONE"
+    );
 
-  // ============================================================
-  // Helpers
-  // ============================================================
+    const normalizedWaterAlerts =
+        waterAlerts.toUpperCase();
 
-  const normalizedBillingStatus =
-    String(billingStatus).toUpperCase();
+    const isPaid = billingStatus === "PAID";
+    const isOverdue = billingStatus === "OVERDUE";
 
-  const normalizedWaterAlerts =
-    String(waterAlerts).toUpperCase();
+    const hasWaterAlert =
+        normalizedWaterAlerts !== "NONE" &&
+        normalizedWaterAlerts !== "NO ALERTS";
 
-  const isPaid =
-    normalizedBillingStatus === "PAID";
+    // ============================================================
+    // Helpers
+    // ============================================================
 
-  const hasWaterAlert =
-    normalizedWaterAlerts !== "NONE" &&
-    normalizedWaterAlerts !== "NO ALERTS";
+    const getBillingConfig = () => {
+        if (isPaid) {
+            return {
+                value: "Paid",
+                description: "Your latest bill is settled",
+                badge: "Payment Complete",
+                icon: CheckCircle2,
+                iconBg: "bg-emerald-50",
+                iconColor: "text-emerald-600",
+                valueColor: "text-emerald-600",
+                badgeStyle:
+                    "border-emerald-100 bg-emerald-50 text-emerald-700",
+                accent:
+                    "from-emerald-400 to-green-500",
+            };
+        }
 
-  // ============================================================
-  // Cards
-  // ============================================================
+        if (isOverdue) {
+            return {
+                value: "Overdue",
+                description: "Please clear your outstanding bill",
+                badge: "Payment Overdue",
+                icon: AlertTriangle,
+                iconBg: "bg-red-50",
+                iconColor: "text-red-600",
+                valueColor: "text-red-600",
+                badgeStyle:
+                    "border-red-100 bg-red-50 text-red-700",
+                accent:
+                    "from-red-400 to-rose-500",
+            };
+        }
 
-  const cards = [
-    {
-      key: "usage",
+        return {
+            value: "Pending",
+            description: "Payment is pending",
+            badge: "Payment Pending",
+            icon: Clock3,
+            iconBg: "bg-amber-50",
+            iconColor: "text-amber-600",
+            valueColor: "text-amber-600",
+            badgeStyle:
+                "border-amber-100 bg-amber-50 text-amber-700",
+            accent:
+                "from-amber-400 to-orange-500",
+        };
+    };
 
-      title: "Current Month Usage",
+    const billingConfig = getBillingConfig();
 
-      value: `${currentMonthUsage.toFixed(2)} KL`,
+    // ============================================================
+    // Cards
+    // ============================================================
 
-      description: "Water consumed this month",
+    const cards = [
+        {
+            key: "usage",
+            title: "Current Month Usage",
+            value: `${currentMonthUsage.toFixed(2)} KL`,
+            description:
+                "Water consumed during the current billing cycle",
+            icon: Droplets,
+            iconBg: "bg-blue-50",
+            iconColor: "text-blue-600",
+            valueColor: "text-slate-900",
+            badge:
+                currentMonthUsage > 0
+                    ? "Usage Recorded"
+                    : "No Usage",
+            badgeIcon:
+                currentMonthUsage > 0
+                    ? TrendingUp
+                    : Clock3,
+            badgeStyle:
+                currentMonthUsage > 0
+                    ? "border-blue-100 bg-blue-50 text-blue-700"
+                    : "border-slate-200 bg-slate-50 text-slate-500",
+            accent:
+                "from-blue-400 to-cyan-500",
+        },
 
-      icon: Droplets,
+        {
+            key: "bill",
+            title: "Current Bill",
+            value: `₹${currentBill.toFixed(2)}`,
+            description:
+                "Latest generated water bill",
+            icon: ReceiptText,
+            iconBg: "bg-emerald-50",
+            iconColor: "text-emerald-600",
+            valueColor: "text-slate-900",
+            badge:
+                currentBill > 0
+                    ? "Bill Generated"
+                    : "No Current Bill",
+            badgeIcon:
+                currentBill > 0
+                    ? ReceiptText
+                    : Clock3,
+            badgeStyle:
+                currentBill > 0
+                    ? "border-emerald-100 bg-emerald-50 text-emerald-700"
+                    : "border-slate-200 bg-slate-50 text-slate-500",
+            accent:
+                "from-emerald-400 to-teal-500",
+        },
 
-      iconClass:
-        "bg-blue-50 text-blue-600 border-blue-100",
+        {
+            key: "billing",
+            title: "Billing Status",
+            value: billingConfig.value,
+            description: billingConfig.description,
+            icon: CreditCard,
+            iconBg: billingConfig.iconBg,
+            iconColor: billingConfig.iconColor,
+            valueColor: billingConfig.valueColor,
+            badge: billingConfig.badge,
+            badgeIcon: billingConfig.icon,
+            badgeStyle: billingConfig.badgeStyle,
+            accent: billingConfig.accent,
+        },
 
-      valueClass: "text-blue-600",
+        {
+            key: "alerts",
+            title: "Water Alerts",
+            value: hasWaterAlert
+                ? waterAlerts
+                : "All Clear",
+            description: hasWaterAlert
+                ? "Attention may be required"
+                : "No active water alerts",
+            icon: BellRing,
+            iconBg: hasWaterAlert
+                ? "bg-red-50"
+                : "bg-cyan-50",
+            iconColor: hasWaterAlert
+                ? "text-red-600"
+                : "text-cyan-600",
+            valueColor: hasWaterAlert
+                ? "text-red-600"
+                : "text-cyan-600",
+            badge: hasWaterAlert
+                ? "Attention Required"
+                : "Everything Looks Good",
+            badgeIcon: hasWaterAlert
+                ? AlertTriangle
+                : CheckCircle2,
+            badgeStyle: hasWaterAlert
+                ? "border-red-100 bg-red-50 text-red-700"
+                : "border-cyan-100 bg-cyan-50 text-cyan-700",
+            accent: hasWaterAlert
+                ? "from-red-400 to-rose-500"
+                : "from-cyan-400 to-blue-500",
+        },
+    ];
 
-      badge:
-        currentMonthUsage > 0
-          ? "Usage Recorded"
-          : "No Usage",
+    // ============================================================
+    // Animation
+    // ============================================================
 
-      badgeClass:
-        currentMonthUsage > 0
-          ? "bg-blue-50 text-blue-600 border-blue-100"
-          : "bg-slate-50 text-slate-500 border-slate-200",
+    const containerVariants = {
+        hidden: {
+            opacity: 0,
+        },
 
-      badgeIcon:
-        currentMonthUsage > 0
-          ? TrendingUp
-          : Clock3,
-    },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.08,
+            },
+        },
+    };
 
-    {
-      key: "bill",
+    const cardVariants = {
+        hidden: {
+            opacity: 0,
+            y: 18,
+        },
 
-      title: "Current Bill",
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.4,
+                ease: [0.16, 1, 0.3, 1],
+            },
+        },
+    };
 
-      value: `₹${currentBill.toFixed(2)}`,
+    // ============================================================
+    // UI
+    // ============================================================
 
-      description: "Latest generated water bill",
-
-      icon: ReceiptText,
-
-      iconClass:
-        "bg-emerald-50 text-emerald-600 border-emerald-100",
-
-      valueClass: "text-emerald-600",
-
-      badge:
-        currentBill > 0
-          ? "Bill Generated"
-          : "No Current Bill",
-
-      badgeClass:
-        currentBill > 0
-          ? "bg-emerald-50 text-emerald-600 border-emerald-100"
-          : "bg-slate-50 text-slate-500 border-slate-200",
-
-      badgeIcon:
-        currentBill > 0
-          ? ReceiptText
-          : Clock3,
-    },
-
-    {
-      key: "billing",
-
-      title: "Billing Status",
-
-      value:
-        normalizedBillingStatus === "PAID"
-          ? "Paid"
-          : normalizedBillingStatus === "OVERDUE"
-          ? "Overdue"
-          : "Pending",
-
-      description: "Current payment status",
-
-      icon: CreditCard,
-
-      iconClass: isPaid
-        ? "bg-emerald-50 text-emerald-600 border-emerald-100"
-        : normalizedBillingStatus === "OVERDUE"
-        ? "bg-red-50 text-red-600 border-red-100"
-        : "bg-amber-50 text-amber-600 border-amber-100",
-
-      valueClass: isPaid
-        ? "text-emerald-600"
-        : normalizedBillingStatus === "OVERDUE"
-        ? "text-red-600"
-        : "text-amber-600",
-
-      badge: isPaid
-        ? "Payment Complete"
-        : normalizedBillingStatus === "OVERDUE"
-        ? "Payment Overdue"
-        : "Payment Pending",
-
-      badgeClass: isPaid
-        ? "bg-emerald-50 text-emerald-600 border-emerald-100"
-        : normalizedBillingStatus === "OVERDUE"
-        ? "bg-red-50 text-red-600 border-red-100"
-        : "bg-amber-50 text-amber-600 border-amber-100",
-
-      badgeIcon: isPaid
-        ? CheckCircle2
-        : normalizedBillingStatus === "OVERDUE"
-        ? AlertTriangle
-        : Clock3,
-    },
-
-    {
-      key: "alerts",
-
-      title: "Water Alerts",
-
-      value: hasWaterAlert
-        ? waterAlerts
-        : "None",
-
-      description: hasWaterAlert
-        ? "Attention may be required"
-        : "No active water alerts",
-
-      icon: BellRing,
-
-      iconClass: hasWaterAlert
-        ? "bg-red-50 text-red-600 border-red-100"
-        : "bg-cyan-50 text-cyan-600 border-cyan-100",
-
-      valueClass: hasWaterAlert
-        ? "text-red-600"
-        : "text-cyan-600",
-
-      badge: hasWaterAlert
-        ? "Attention Required"
-        : "All Clear",
-
-      badgeClass: hasWaterAlert
-        ? "bg-red-50 text-red-600 border-red-100"
-        : "bg-cyan-50 text-cyan-600 border-cyan-100",
-
-      badgeIcon: hasWaterAlert
-        ? AlertTriangle
-        : CheckCircle2,
-    },
-  ];
-
-  // ============================================================
-  // Animation
-  // ============================================================
-
-  const containerVariants = {
-    hidden: {
-      opacity: 0,
-    },
-
-    visible: {
-      opacity: 1,
-
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: {
-      opacity: 0,
-      y: 20,
-      scale: 0.97,
-    },
-
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-
-      transition: {
-        duration: 0.45,
-        ease: [0.16, 1, 0.3, 1],
-      },
-    },
-  };
-
-  // ============================================================
-  // UI
-  // ============================================================
-
-  return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="
-        grid
-        grid-cols-1
-        sm:grid-cols-2
-        xl:grid-cols-4
-        gap-5
-      "
-    >
-      {cards.map((card) => {
-        const Icon = card.icon;
-        const BadgeIcon = card.badgeIcon;
-
-        return (
-          <motion.div
-            key={card.key}
-            variants={cardVariants}
-            whileHover={{
-              y: -5,
-              scale: 1.01,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 320,
-              damping: 22,
-            }}
+    return (
+        <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
             className="
-              group
-              relative
-              overflow-hidden
-              rounded-2xl
-              border
-              border-slate-200
-              bg-white
-              p-5
-              shadow-sm
-              shadow-slate-200/60
-              hover:shadow-lg
-              hover:shadow-slate-200/70
-              transition-shadow
-              duration-300
+                grid
+                grid-cols-1
+                gap-5
+                sm:grid-cols-2
+                xl:grid-cols-4
             "
-          >
-            {/* ==================================================
-                Ambient Background
-            ================================================== */}
+        >
+            {cards.map((card) => {
+                const Icon = card.icon;
+                const BadgeIcon = card.badgeIcon;
 
-            <div
-              className="
-                pointer-events-none
-                absolute
-                -right-10
-                -top-10
-                h-28
-                w-28
-                rounded-full
-                bg-sky-50
-                blur-2xl
-                opacity-0
-                group-hover:opacity-100
-                transition-opacity
-                duration-500
-              "
-            />
+                return (
+                    <motion.div
+                        key={card.key}
+                        variants={cardVariants}
+                        whileHover={{
+                            y: -4,
+                        }}
+                        className="
+                            group
+                            relative
+                            overflow-hidden
+                            rounded-2xl
+                            border
+                            border-slate-200
+                            bg-white
+                            p-5
+                            shadow-sm
+                            transition-all
+                            duration-300
+                            hover:border-slate-300
+                            hover:shadow-lg
+                            hover:shadow-slate-200/60
+                        "
+                    >
+                        {/* ========================================
+                            Top Accent
+                        ======================================== */}
 
-            {/* ==================================================
-                Header
-            ================================================== */}
+                        <div
+                            className={`
+                                absolute
+                                inset-x-0
+                                top-0
+                                h-1
+                                bg-gradient-to-r
+                                ${card.accent}
+                            `}
+                        />
 
-            <div className="relative flex items-start justify-between gap-4">
-              <div className="min-w-0">
-                <p className="text-sm font-medium text-slate-500">
-                  {card.title}
-                </p>
+                        {/* ========================================
+                            Header
+                        ======================================== */}
 
-                <motion.div
-                  key={card.value}
-                  initial={{
-                    opacity: 0,
-                    y: 6,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    duration: 0.35,
-                  }}
-                  className={`
-                    mt-2
-                    text-2xl
-                    sm:text-3xl
-                    font-extrabold
-                    tracking-tight
-                    truncate
-                    ${card.valueClass}
-                  `}
-                >
-                  {card.value}
-                </motion.div>
-              </div>
+                        <div className="flex items-start justify-between gap-4">
+                            <div className="min-w-0">
+                                <p className="
+                                    text-sm
+                                    font-medium
+                                    text-slate-500
+                                ">
+                                    {card.title}
+                                </p>
 
-              {/* Icon */}
+                                <motion.h2
+                                    key={card.value}
+                                    initial={{
+                                        opacity: 0,
+                                        y: 5,
+                                    }}
+                                    animate={{
+                                        opacity: 1,
+                                        y: 0,
+                                    }}
+                                    transition={{
+                                        duration: 0.3,
+                                    }}
+                                    className={`
+                                        mt-2
+                                        truncate
+                                        text-2xl
+                                        font-extrabold
+                                        tracking-tight
+                                        sm:text-3xl
+                                        ${card.valueColor}
+                                    `}
+                                >
+                                    {card.value}
+                                </motion.h2>
+                            </div>
 
-              <div
-                className={`
-                  shrink-0
-                  flex
-                  items-center
-                  justify-center
-                  w-12
-                  h-12
-                  rounded-xl
-                  border
-                  transition-all
-                  duration-300
-                  group-hover:scale-105
-                  ${card.iconClass}
-                `}
-              >
-                <Icon size={23} strokeWidth={2.2} />
-              </div>
-            </div>
+                            {/* Icon */}
 
-            {/* ==================================================
-                Description
-            ================================================== */}
+                            <div
+                                className={`
+                                    flex
+                                    h-11
+                                    w-11
+                                    shrink-0
+                                    items-center
+                                    justify-center
+                                    rounded-xl
+                                    ${card.iconBg}
+                                    ${card.iconColor}
+                                    transition-transform
+                                    duration-300
+                                    group-hover:scale-105
+                                `}
+                            >
+                                <Icon
+                                    size={21}
+                                    strokeWidth={2.2}
+                                />
+                            </div>
+                        </div>
 
-            <p className="relative mt-3 text-xs text-slate-500 leading-relaxed">
-              {card.description}
-            </p>
+                        {/* ========================================
+                            Description
+                        ======================================== */}
 
-            {/* ==================================================
-                Status Badge
-            ================================================== */}
+                        <p className="
+                            mt-3
+                            min-h-[36px]
+                            text-xs
+                            leading-5
+                            text-slate-500
+                        ">
+                            {card.description}
+                        </p>
 
-            <div className="relative mt-4">
-              <span
-                className={`
-                  inline-flex
-                  items-center
-                  gap-1.5
-                  rounded-full
-                  border
-                  px-2.5
-                  py-1
-                  text-[11px]
-                  font-semibold
-                  ${card.badgeClass}
-                `}
-              >
-                <BadgeIcon size={12} />
-                {card.badge}
-              </span>
-            </div>
+                        {/* ========================================
+                            Status + Action Indicator
+                        ======================================== */}
 
-            {/* ==================================================
-                Bottom Accent
-            ================================================== */}
+                        <div className="
+                            mt-4
+                            flex
+                            items-center
+                            justify-between
+                            gap-3
+                            border-t
+                            border-slate-100
+                            pt-4
+                        ">
+                            <span
+                                className={`
+                                    inline-flex
+                                    min-w-0
+                                    items-center
+                                    gap-1.5
+                                    rounded-full
+                                    border
+                                    px-2.5
+                                    py-1
+                                    text-[11px]
+                                    font-semibold
+                                    ${card.badgeStyle}
+                                `}
+                            >
+                                <BadgeIcon
+                                    size={12}
+                                    className="shrink-0"
+                                />
 
-            <div
-              className="
-                absolute
-                bottom-0
-                left-0
-                h-0.5
-                w-0
-                bg-gradient-to-r
-                from-sky-500
-                via-cyan-500
-                to-emerald-500
-                group-hover:w-full
-                transition-all
-                duration-500
-              "
-            />
-          </motion.div>
-        );
-      })}
-    </motion.div>
-  );
+                                <span className="truncate">
+                                    {card.badge}
+                                </span>
+                            </span>
+
+                            <ArrowUpRight
+                                size={15}
+                                className="
+                                    shrink-0
+                                    text-slate-300
+                                    transition-all
+                                    duration-300
+                                    group-hover:-translate-y-0.5
+                                    group-hover:translate-x-0.5
+                                    group-hover:text-slate-500
+                                "
+                            />
+                        </div>
+
+                        {/* ========================================
+                            Bottom Hover Accent
+                        ======================================== */}
+
+                        <div
+                            className={`
+                                absolute
+                                bottom-0
+                                left-0
+                                h-0.5
+                                w-0
+                                bg-gradient-to-r
+                                ${card.accent}
+                                transition-all
+                                duration-500
+                                group-hover:w-full
+                            `}
+                        />
+                    </motion.div>
+                );
+            })}
+        </motion.div>
+    );
 }
